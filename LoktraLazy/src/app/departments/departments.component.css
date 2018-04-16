@@ -1,0 +1,26 @@
+/*common*/
+.row{margin-right: 0px;margin-left: 0px;}
+.fs12{font-size: 12px;}
+.p0{padding-right:0px;padding-left: 0px;}
+/*end of common*/
+.departmentsHead{   font-weight: 300;
+    font-style: normal;
+    font-size: 20px;
+    color: #FFFFFF;
+    padding:0px 20px;
+    line-height: 60px;
+    height:60px;
+    background-color: rgba(200, 107, 250, 1);}
+.lh28{line-height: 28px;}
+.bbE4E4E4{border-bottom:1px solid #E4E4E4;}
+.lh34{line-height: 34px;}
+/*loader*/
+.movingLoader
+{
+  height:50px;width:50px;position: absolute;display: block;margin: auto;top: 0px;bottom: 0px;left: 0px;right: 0px;
+}
+.lokraImgLoader
+{
+  height:30px;width:30px;position: absolute;display: block;margin: auto;top: 0px;bottom: 0px;left: 0px;right: 0px;
+}
+/*end of loader*/

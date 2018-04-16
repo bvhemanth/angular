@@ -1,0 +1,215 @@
+/*header part*/
+.agentDetailheader
+{
+    background-color: #C86BFA;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 20px;
+    color: #FFFFFF;
+    line-height: 60px;
+    height:60px;
+}
+/*header part*/
+
+/*commoon*/
+.row
+{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.p0
+{
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.tac
+{
+  text-align: center;
+}
+.fs14
+{
+  font-size: 14px;
+}
+.fs12
+{
+  font-size:12px;
+}
+.fs10
+{
+  font-size:10px;
+}
+.fs18
+{
+  font-size:18px;
+}
+.c_333
+{
+  color:#333;
+}
+.c_999
+{
+  color:#999999;
+}
+.c_00C
+{
+  color:#00CC33;
+}
+.c_00E/*green*/
+{
+  color:#00E53D;
+}
+.c_FF4
+{
+  color:#FF4044;
+}/*gps off*/
+.c_ff9
+{
+  color:#FF9900;
+}
+.fs9
+{
+  font-size: 9px;
+}
+.c_ABA
+{
+    color: #ABABAB;
+}
+.mb10
+{
+  margin-bottom: 10px;
+}
+.font_family
+{
+    font-family: 'Open Sans Semibold', 'Open Sans Regular', 'Open Sans';
+}
+/*end of common*/
+
+/* function dept*/
+.rCMf
+{
+  border-width: 0px;;height: 30px;line-height:30px;font-family: 'Open Sans';font-style: normal;font-size: 12px;text-align: center;box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.298039215686275);background-color: #F2F2F2;width: 45%;
+  padding:0px 0px;
+}
+
+/*end of fun dept*/
+
+/*active tab between 3*/
+.activeTab
+{
+  background-color: #C4DBFF;
+}
+/*end of active tab between 3*/
+
+/*agent avata top*/
+.avatar
+{
+  border-radius: 100%; height: 32px; width: 32px;
+}
+/*end of agent avatar top*/
+
+.top_line:before
+{
+    left: 50%;
+    top: 0;
+    transform: translateY(-100%);
+    border-left: dashed 2px #cbcbcb;
+    border-top: dashed 2px #cbcbcb;
+
+    width: 2px;
+    height: 25px;
+}
+.top_line:after
+{
+    content: "";
+    position: absolute;
+    border-radius: 5px;
+    border-left: dashed 2px #cbcbcb;
+    border-top: dashed 2px #cbcbcb;
+    left: 0;
+}
+.hide
+{
+  display:none;
+}
+.show
+{
+  display:block;
+}
+
+/*drop down*/
+.for_childs_drop_down
+{  
+  cursor: pointer;
+  float: right;
+  right: 3px;
+  width: 10px;
+  line-height: 6px;
+  top: 17px;
+  position: absolute;
+}  
+.for_childs_drop_down  .icon-ellipsis-vertical
+{
+  width: 10px;
+}
+
+.dropbtn {
+color: #4CAF50;
+padding: 6px;
+font-size: 16px;
+border: none;
+cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: -61px;
+    background-color: #fff;
+    min-width: 80px;
+    border-radius:3px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 27px;
+    padding:3px 3px;
+}
+
+.dropdown-content div {
+    color: black;
+    padding: 0px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown>i {
+  text-align: right;
+}
+.dropdown-content div:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: none;
+}
+
+/*end of drop down*/
+
+
+/*loader*/
+
+.movingLoader
+{
+  height:50px;width:50px;position: absolute;display: block;margin: auto;top: 0px;bottom: 0px;left: 0px;right: 0px;
+}
+.lokraImgLoader
+{
+  height:30px;width:30px;position: absolute;display: block;margin: auto;top: 0px;bottom: 0px;left: 0px;right: 0px;
+}
+
+/*end of loader*/

@@ -1,0 +1,400 @@
+/*side bar*/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: linear-gradient(180deg, rgb(196, 191, 197) 0%, rgb(255, 255, 255) 80%);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 2px;
+}
+.sidenav a {
+    padding: 8px 8px 8px 14px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #000000;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+.sidenav>a>i{
+    color:#CBCBCB;
+    font-size: 19px;
+}
+
+.sidenav>a.active>i{
+    color:#C86BFA;
+    font-size: 19px;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right:0px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 650px) {
+  /*.sidenav {padding-top: 8px;}*/
+  .sidenav a {font-size: 14px;}
+}
+
+a.active {
+    background: #EDEDED;
+    color: #000;
+    display: block;
+    padding: 10px;
+    border-left:3px solid #C86BFA;
+}
+a.active>i{
+    color: #C86BFA;
+    font-size: 19px;
+}
+
+.footerMenu{
+    position: absolute;bottom: 0px;width: 100%;
+}
+/*end of side bar*/
+
+.vp_b{
+    background-color: #999999;
+    color:#fff;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid #999999;
+    padding:3px 15px;
+}
+
+.membersHead{
+    font-weight: 300;
+    font-style: normal;
+    font-size: 20px;
+    color: #FFFFFF;
+    padding:0px 20px;
+    line-height: 60px;
+    height:60px;
+    background-color: rgba(200, 107, 250, 1);
+}
+.pm_b0{
+    margin-bottom: 0px;
+}
+.authName{
+    color:#4F4F4F;
+    font-size: 14px;
+}
+.orgName{
+    color:#257BFC;
+    font-size: 12px;
+}
+.roles{
+    color:#8181A7;
+    font-size: 12px;
+}
+
+/*common css*/
+.row{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.color_4F4F4F{
+    color:#4F4F4F;
+}
+.c_978F7F{
+    color:#978F7F;
+}
+.fs14{
+    font-size: 14px;
+}
+.fs12
+{
+    font-size:12px;
+}
+.fs10
+{
+    font-size:10px;
+}
+.fs20
+{
+    font-size: 20px;
+}
+.font_family
+{
+  font-family: 'Open Sans Semibold', 'Open Sans Regular', 'Open Sans';
+}
+.rCMf
+{
+    border-width: 0px;
+    height: auto;
+    line-height:30px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-size: 12px;
+    text-align: center;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.298039215686275);
+    background-color: #F2F2F2;width: 45%;
+    padding:0px 0px;
+    border-radius: 4px;
+}
+.c_0066FF
+{
+    color:#0066FF;
+}
+.p0
+{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.tac
+{
+    text-align: center;
+}
+
+/*common end*/
+
+/*table css*/
+#memActivity
+{
+    width:90%;
+    margin:auto;
+    border:1px solid #F2F2F2;
+    margin-bottom: 10px;
+}
+#memActivity th,td 
+{
+    border:1px solid #F2F2F2;
+}
+/* end of table css*/
+
+/* member card*/
+.eachMember
+{
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.298039215686275); 
+    background-color: #fff;
+    border-radius: 3px; 
+    margin-bottom: 7px;
+    padding: 5px 1px;
+}
+.pending
+{
+    color:#FF9900;
+}
+.success
+{
+    color:#00CC33;
+}    
+.failed
+{
+    color:#FF6462;
+}
+.c_AFAFA7
+{
+    color:#AFAFA7;
+}
+/*member card end*/
+
+/* on off inactive numbers*/
+.onlineButton
+{
+    color:#fff;
+    background-color: #00CC33;
+    border-radius: 12px;
+    height: 22px;
+    line-height: 22px;
+}
+.onlineButton_wb
+{
+    color:#00CC33;
+    border:2px solid #00CC33;
+    background-color:#fff;
+    border-radius: 12px;
+    height: 22px;
+    line-height: 22px;
+}
+
+.offlineButton
+{
+    color:#fff;
+    background-color: #FF6262;
+    border-radius: 12px;
+    height: 22px;
+    line-height: 22px;
+}
+.offlineButton_wb
+{   
+    color:#FF6262;
+    border:2px solid #FF6262;
+    background-color:#fff;
+    border-radius: 12px;
+    height: 22px;
+    line-height: 22px;
+}
+.inactiveButton
+{
+    color:#fff;
+    background-color: #666666;
+    border-radius: 12px;
+    height: 22px;
+    line-height: 22px;
+}
+.inactiveButton_wb
+{
+    color:#666666;
+    background-color: #fff;
+    border:2px solid #666666;    
+    border-radius: 12px;
+    height: 22px;
+    line-height: 22px;
+
+}
+.prl3
+{
+    padding-right:3px;
+    padding-left: 3px;
+}
+/*end of on off inactive numbers*/
+
+/* calender*/
+.PNarrows
+{
+    color: rgba(51, 51, 51, 0.866666666666667);
+}
+
+/*end of calender*/
+
+/*select option*/
+select{
+    background: #F2F2F2;
+    color:#000;
+}
+/*end of select option*/    
+
+
+
+/*modal css*/
+
+.modal-open
+{
+  overflow: scroll;
+}
+.searchResultsCss {
+  overflow-y: scroll;
+  top: 178px;
+  max-height: 150px;  
+  position: absolute;
+  width:95%;
+  background-color: #fff;
+  border: 1px solid rgba(228, 228, 228, 1);
+  border-radius: 2px;
+  z-index:999;
+  font-size: 12px;
+  padding: 0px 11px;
+
+}
+.searchAgentCss{
+    overflow-y: scroll;
+    top: 225px;
+    max-height: 195px;  
+    position: absolute;
+    width:95%;
+    background-color: #fff;
+    border: 1px solid rgba(228, 228, 228, 1);
+    border-radius: 2px;
+    z-index:999;
+    font-size: 12px;
+    padding: 0px 11px;
+}
+.doneButton
+{
+  background-color: rgba(200, 107, 250, 1);
+  padding:3px 5px;
+  color:#fff;
+}
+.modalForm
+{
+  height: 30px;
+  font-size: 12px;
+
+}
+/*end of modal css*/
+
+
+/*loader*/
+
+.movingLoader
+{
+  height:50px;width:50px;position: absolute;display: block;margin: auto;top: 0px;bottom: 0px;left: 0px;right: 0px;
+}
+.lokraImgLoader
+{
+  height:30px;width:30px;position: absolute;display: block;margin: auto;top: 0px;bottom: 0px;left: 0px;right: 0px;
+}
+
+/*end of loader*/
+
+
+
+/*header*/
+.header
+{
+  position: fixed;z-index: 99;width: 100%;top: 0px;
+}
+.headerRow
+{
+  width:100%;margin-bottom: 25px;padding: 10px;height: 100px;
+}
+
+.fsletterDiv
+{
+  width:30%;height:50px;text-align: center;line-height: 50px;
+}
+.fsletter
+{
+  height:50px;width:50px;border-radius: 100%;background-color: #FFFFFF;
+}
+.w70
+{
+  width:70%;
+}
+
+
+.logoutLink
+{
+  border-top: 1px solid #ddd;margin-top: 10px;
+}
+
+.navFooter
+{
+  position: absolute;bottom: 0px;width: 100%;
+}
+.footerRow
+{
+  background-color: #F2F2F2;padding:7px 4px 4px 4px;
+}
+.footerIcon
+{
+  height:30px;height:30px;
+}
+.powerdBy
+{
+  font-style: italic;color:#A492A4;
+}
+.companyFooter
+{
+  font-family: 'Open Sans Bold', 'Open Sans R;egular', 'Open Sans';font-weight: 700;font-style: normal;font-size: 16px;color: #C86BFA;
+}
+.top_title
+{
+  font-size:30px;cursor:pointer;padding: 0px 10px;
+}
+/*end of header*/

@@ -1,0 +1,370 @@
+<header class="header" (swipeleft)="swipe('left')" (swiperight)="swipe('right')">
+  <div id="mySidenav" class="sidenav" ng-swipe-right="openNav()" (swipeleft)="swipe('left')" (swiperight)="swipe('right')">
+    <div class="row" class="headerRow">
+      <a class="row" href="javascript:void(0)" class="closebtn" (click)="closeNav()">
+        <i class="fa fa-times fs20" aria-hidden="true"></i>
+      </a>
+      <div class="pull-left fsletterDiv">
+        <div class="fsletter">{{firstLetter}}{{secondLetter}}</div>
+      </div>
+      <div class="row w70 pull-right">
+        <p class="pm_b0 authName">
+          <b>{{agentName}}</b>
+        </p>
+        <p class="pm_b0 orgName">
+          <b>{{orgName}}</b>
+        </p>
+        <div class="pm_b0" ng-repeat="role in roles">
+            {{roles}}            
+        </div>
+        <!--<button class="vp_b"> View profile</button>-->
+      </div>  
+    </div>      
+    <!--<app-sidenavbar></app-sidenavbar>-->
+    <a routerLink="/dashboard" [routerLinkActive]="['active']" (click)="closeNav('dashboard')" >
+    <i  class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;&nbsp;Dashboard
+	</a>
+	<a routerLink="/members" [routerLinkActive]="['active']" (click)="closeNav('members')">
+	    <i class="fa fa-users" aria-hidden="true"></i>
+	    &nbsp;&nbsp;Members
+	</a>
+	<a routerLink="/lazy/memberdetails" [routerLinkActive]="['active']" (click)="closeNav('lazy/memberdetails')">
+	    <i class="fa fa-map" aria-hidden="true"></i>&nbsp;&nbsp;Tracking
+	</a>
+
+	<a routerLink="/lazy/leaves" [routerLinkActive]="['active']" (click)="closeNav('lazy/leaves')">
+	    <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Leaves
+	</a>
+	<a routerLink="/lazy/attendance" [routerLinkActive]="['active']" (click)="closeNav('lazy/attendance')">
+	        <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Attendance
+	</a>
+	<a class="logoutLink" (click)="logOut()">
+	    <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;Logout
+	</a>
+
+	<!--<a><i class="fa fa-question-circle"></i>&nbsp;&nbsp;Help</a>-->
+	<footer class="navFooter">
+	    <div class="row footerRow">
+	        <div class="col-xs-2 p0">
+	            <img src="../assets/favicon.png" class="footerIcon">
+	        </div>
+	        <div class="col-xs-8 p0 tac">  
+	            <small> 
+	                <span style=""> powered by </span>
+	                <b class="companyFooter">Loktra</b>
+	            </small>
+	        </div>  
+	        <div class="col-xs-2 p0"></div>
+	    </div>
+	</footer>
+  </div>
+  <div class="row top_title membersHead">
+    <div class="col-xs-2" (click)="openNav()">
+        <span> <i class="fa fa-bars fs20" aria-hidden="true"></i></span> 
+    </div>
+    <div class="col-xs-10 font_family">
+      Tracking
+    </div>
+  </div>
+</header>
+
+<section style="background-color: #FFFFFF;box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.298039215686275);    position: relative; margin-top: 60px;">
+    <div class="row fs14" style="width:100%;padding:10px 10px;">
+        <div class="col-xs-4 fs14 PNarrows" style="padding:0px 0px;text-align:left;" (click)="previous()">  <i class="fa fa-chevron-left PNarrows" aria-hidden="true"></i>&nbsp;&nbsp; Previous
+        </div>
+        <div class="col-xs-4 fs14 p0 PNarrows"  style="text-align: center;" name="daterangeInput" daterangepicker [options]="options" id="mainDate" (selected)="selectedDate($event)">{{DaytoDisplay}} <i class="fa fa-caret-down PNarrows" style=""  aria-hidden="true"></i>
+        </div>
+        <div class="col-xs-4 PNarrows" style=";text-align:right;padding:0px 0px;" (click)="next()">Next&nbsp;&nbsp;<i class="fa fa-chevron-right fs14 PNarrows " style="padding:3px;" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="row fs14" style="width:100%;padding:10px 10px;">
+        <div class="col-xs-6 rCMf" style="float:left;"  routerLink="/departments" >Department :<span style="color:#0066FF;font-weight: bold;">{{functionName}} </span>
+        </div><!--data-toggle="modal" data-target="#myModal"-->
+        <div class="col-xs-6 rCMf" style="float:right;" routerLink="/regions">Region :<span style="color:#0066FF;font-weight: bold;">{{regionName}} </span> 
+        </div>
+    </div>
+</section>
+
+<section  style="margin-top:10px;margin-bottom: 10px;">
+  <div class="row" style="width:90%;margin:auto;box-shadow: 1px 2px 5px #ddd;">
+    <div class="col-xs-4 fs10 c_333 p0 tac activeTab" (click)='membersTab($event)' style="border:1px solid #C4DBFF;padding:3px 5px;">Members</div>
+    <div class="col-xs-4 fs10 c_333 p0 tac" (click)='mapsTab($event)' style="border:1px solid #C4DBFF;padding:3px 5px;" >Map</div>
+    <div class="col-xs-4 fs10 c_333 p0 tac" (click)='tasksTab($event)' style="border:1px solid #C4DBFF;padding:3px 5px;">Tasks</div>
+  </div>
+</section>
+
+<section style="background-color: #F2F2F2;"  *ngIf="statusFilter">
+    <div class="row" style="padding:13px 5px 0px 5px;">
+        <div class="col-xs-8 p0">
+        <div class="col-xs-4 tac fs12 prl3"><div class="onlineButton" id="onlinenumber" data-id="onlinenumber" (click)="onlinenumber($event)">{{totalOnlineNumber}}</div></div>
+        <div class="col-xs-4 tac fs12 prl3"><div class="offlineButton" id="offlinenumber" data-id="offlinenumber" (click)="offlinenumber($event)">{{totalOfflineNumber}}</div></div>
+        <div class="col-xs-4 tac fs12 prl3"><div class="inactiveButton" id="inactivenumber" data-id="inactivenumber"  (click)="inactivenumber($event)">{{totalInactiveNumber}}</div></div>
+        </div> 
+        <div class="col-xs-4 p0">
+          <select [(ngModel)]="levelNum" id="selectRole" (ngModelChange)="sectedOption()" style="float:right;">
+                <option value="all" selected="selected">All</option>
+                <option value="manager">Managers</option>
+                <option value="admin">Admins</option>
+                <option value="agent">Agents</option>
+            </select>
+        </div>
+    </div>  
+</section>
+
+<section *ngIf="membersDisplay">
+  <div class="row" style="background-color: #F2F2F2;"> 
+    <div style="position: relative;margin-top: 20px;padding:0px 10px;">
+      <div class="fixRowHeight row_hover" *ngFor="let member of memberData" >
+          
+          <div class="row online" *ngIf="member.status==='ONLINE'" style="margin-bottom: 5px;box-shadow: 0 2px 2px rgba(0,0,0,.298039215686275);background-color: #fff;border-radius: 3px;padding:8px 3px;">
+            <div class="row" style="margin:auto;width:90%;height: auto;padding: 0px 0px 0px 0px;" id={{member.id}} (click)="agentDetaisroute(member.id)">
+              <div class="col-xs-2 p0 fs12" style="">
+                  <img  *ngIf="member.avatar!=null" src={{member.avatar}}  style="border-radius: 100%; height: 36px; width: 36px; "/>
+                  <img  *ngIf="member.avatar===null" src='../assets/noProfilePic.png'  style="border-radius: 100%; height: 36px; width: 36px; background-color: #666666;"/> 
+                  <i class="fa fa-circle" *ngIf="member.status==='ONLINE'" style="color:#00E53D;    position: absolute;left: 26px;top: 27px;border: 2px solid #fff;border-radius: 100%;font-size: 8px;" aria-hidden="true"></i>
+                  <i class="fa fa-circle" *ngIf="member.status==='OFFLINE'" style="color:#FF4D4D;" aria-hidden="true"></i>
+                  <i class="fa fa-circle" *ngIf="member.status==='INACTIVE'" style="color:#666666 ;" aria-hidden="true"></i>
+              </div>
+              <div class="col-xs-10 fs12"><b class="font_family fs14">{{member.name}}</b><br/>
+                <span class="fs10 c_0066FF">{{member.user_roles[0].roles.join(' | ')|uppercase}}</span>
+                <p  class="fs10 mb0" *ngIf="member.same_location!=null">{{member.address}}</p>
+              </div> 
+            </div>
+          </div>
+          
+          <div class="row offline"  *ngIf="member.status==='OFFLINE'" style="margin-bottom: 5px;box-shadow: 0 2px 2px rgba(0,0,0,.298039215686275);background-color: #fff;border-radius: 3px;padding:8px 3px;">
+            <div class="row" style="margin:auto;width:90%; height: auto;padding: 0px 0px 0px 0px;" id={{member.id}} (click)="agentDetaisroute(member.id)">
+              <div class="col-xs-2 p0 fs12" style="">
+                <img  *ngIf="member.avatar!=null" src={{member.avatar}}  style="border-radius: 100%; height: 36px; width: 36px; "/>
+                  <img  *ngIf="member.avatar===null" src='../assets/noProfilePic.png'  style="border-radius: 100%; height: 36px; width: 36px; background-color: #666666;"/>
+                  <i class="fa fa-circle" *ngIf="member.status==='ONLINE'" style="color:#00E53D;" aria-hidden="true"></i>
+                  <i class="fa fa-circle" *ngIf="member.status==='OFFLINE'" style="color:#FF4D4D;position: absolute;left: 26px;top: 27px;border: 2px solid #fff;border-radius: 100%;font-size: 8px;" aria-hidden="true"></i>
+                  <i class="fa fa-circle" *ngIf="member.status==='INACTIVE'" style="color:#666666 ;" aria-hidden="true"></i> 
+              </div>
+              <div class="col-xs-10 fs14">
+                <b class="font_family">{{member.name}}</b><br/>
+                <span class="fs10 c_0066FF">{{member.user_roles[0].roles.join(' | ')|uppercase}}</span>
+                <p class="fs10 mb0" *ngIf="member.same_location!=null">{{member.address}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row inactive"  *ngIf="member.status==='INACTIVE'" style="margin-bottom: 5px;box-shadow: 0 2px 2px rgba(0,0,0,.298039215686275);background-color: #fff;border-radius: 3px;padding:8px 3px;">
+            <div class="row" style="margin:auto;width:90%; height: auto;padding: 0px 0px 0px 0px;" id={{member.id}} (click)="agentDetaisroute(member.id)">
+              <div class="col-xs-2 p0 fs12" style="">
+                  <img  *ngIf="member.avatar!=null" src={{member.avatar}}  style="border-radius: 100%; height: 36px; width: 36px; "/>
+                  <img  *ngIf="member.avatar===null" src='../assets/noProfilePic.png'  style="border-radius: 100%; height: 36px; width: 36px;background-color: #666666;"/>
+                  <i class="fa fa-circle" *ngIf="member.status==='ONLINE'" style="color:#00E53D;" aria-hidden="true"></i>
+                  <i class="fa fa-circle" *ngIf="member.status==='OFFLINE'" style="color:#FF4D4D;" aria-hidden="true"></i>
+                  <i class="fa fa-circle" *ngIf="member.status==='INACTIVE'" style="color:#666666 ;position: absolute;left: 26px;top: 27px;border: 2px solid #fff;border-radius: 100%;font-size: 8px;" aria-hidden="true"></i>
+              </div>
+              <div class="col-xs-10 fs12"><b class="font_family fs14">{{member.name}}</b><br/>
+                <span class="fs10 c_0066FF">{{member.user_roles[0].roles.join(' | ')|uppercase}}</span>
+                <p class="fs10 mb0" *ngIf="member.same_location!=null">{{member.address}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row others"  *ngIf="member.status==='OTHERS'" ng-show="showDetails" id={{member.id}} style="margin-bottom: 5px;box-shadow: 0 2px 2px rgba(0,0,0,.298039215686275);background-color: #fff;border-radius: 3px;padding:8px 3px;">
+            <div class="row" style="margin:auto;width:90%;padding: 0px 0px 0px 0px;">
+                <div class="col-xs-2 p0 fs12" style="">
+                    <img  *ngIf="member.avatar!=null" src={{member.avatar}}  style="border-radius: 100%; height: 36px; width: 36px; "/>
+                    <img  *ngIf="member.avatar===null" src='../assets/noProfilePic.png'  style="border-radius: 100%; height: 36px; width: 36px; background-color: #666666;"/>
+                      <i class="fa fa-circle" *ngIf="member.status==='ONLINE'" style="color:#00E53D;" aria-hidden="true"></i>
+                    <i class="fa fa-circle" *ngIf="member.status==='OFFLINE'" style="color:#FF4D4D;"  aria-hidden="true"></i>
+                    <i class="fa fa-circle" *ngIf="member.status==='INACTIVE'" style="color:#666666 ;" aria-hidden="true"></i> 
+                </div>
+                <div class="col-xs-10 fs12"><b class="font_family fs14">{{member.name}}</b><br/>
+                  <span class="fs10 c_0066FF">{{member.user_roles[0].roles.join(' | ')|uppercase}}</span>
+                  <p class="fs10 mb0" *ngIf="member.same_location!=null">{{member.address}}</p>
+                </div>     
+            </div>
+          </div>
+
+      </div>
+      <div class="row tac" *ngIf="memberData.length===0"> 
+          <div calss="row">
+            <img src="../assets/agentEmptyList.png" style="width:40px;height:40px;">
+          </div>
+          <div class="row">No Data</div>
+      </div>    
+    </div> 
+  </div>
+</section> 
+
+
+<section>
+<div id="mapComponent">
+    <!--<div class="toggleButtons">
+        <ul>
+            <li (click)="toggleMapStyle()" [class.selected]="toggleDarkView">Dark Map</li>
+            <li (click)="toggleTrafficView()" [class.selected]="toggleTraffic">Traffic</li>
+            <li (click)="toggleAgentsView()" [class.selected]="toggleAgents">Agent</li>
+            <li>Unassigned</li>
+        </ul>
+    </div>-->
+    <div id="map" style="height:400px;width:100%;">  
+
+    </div>
+</div>
+</section>
+
+<section *ngIf="tasksDisplay">
+  <div class="row aurow">
+    <div class="col-xs-6 tac bbblack p0 fs10" (click)="assignList($event)">Assigned - {{totalTasks.list.Assigned.length}}</div>
+    <div class="col-xs-6 tac p0 fs10" (click)="unAssignList($event)">Unassigned - {{totalTasks.list.Unassigned.length}}</div>
+  </div>
+
+  <div *ngIf="assigendListDisplay" class="mt10">
+  <div class="row" *ngFor="let tasks of assignedTasks">
+      <div *ngIf="tasks.status==='SUCCESS'"   class="successCards">  
+            <div class="row fs10">{{tasks.name}}</div>
+            <div class="row fs10">Agent : {{tasks.name}}</div>
+            <div class="row">
+              <div class="col-xs-6 fs10">
+                <span style="border: 1px solid #00CC33;padding: 2px 6px;border-radius: 3px;line-height: 45px;background-color: #fff;color:#00CC33;">
+                  <b>{{tasks.status}}</b>
+                </span>
+              </div>
+              <div class="col-xs-6 fs10 c_0066FF">{{tasks.last_updated|date: 'MMM-dd-yy hh:mm a'}}</div>
+            </div>
+        </div>
+
+      <div *ngIf="tasks.status==='FAILED'" class="failedCards">
+          <div class="row fs10">{{tasks.name}}</div>
+          <div class="row fs10">Agent : {{tasks.agent}}</div>
+          <div class="row">
+              <div class="col-xs-6 fs10">{{tasks.status}}</div>
+              <div class="col-xs-6 fs10 c_0066FF">{{tasks.last_updated|date: 'MMM-dd-yy hh:mm a'}}</div>
+          </div>
+      </div>
+      <div *ngIf="tasks.status==='PENDING'"  class="pendingCards">
+          <div class="row fs10">{{tasks.name}}</div>
+          <div class="row fs10">Agent : {{tasks.agent}}</div>
+          <div class="row">
+              <div class="col-xs-6 fs10">
+                <span  style="color: rgb(255, 153, 0);border: 1px solid rgb(255, 153, 0);padding: 2px 6px;border-radius: 3px;">
+                  <b>{{tasks.status}}</b>
+                </span>
+              </div>
+              <div class="col-xs-6 fs10 c_0066FF">{{tasks.last_updated|date: 'MMM-dd-yy hh:mm a'}}</div>
+          </div>
+      </div>
+      <div *ngIf="tasks.status==='ACKNOWLEDGED'" class="ackCards">
+          <div class="row fs10">{{tasks.name}}</div>
+          <div class="row fs10">Agent : {{tasks.agent}}</div>
+          <div class="row">
+              <div class="col-xs-6 fs10">{{tasks.status}}</div>
+              <div class="col-xs-6 fs10 c_0066FF">{{tasks.last_updated|date: 'MMM-dd-yy hh:mm a'}}</div>
+          </div>
+      </div>
+      <div *ngIf="tasks.status==='REVISIT'"  class="revisitCards">
+          <div class="row fs10">{{tasks.name}}</div>
+          <div class="row fs10">Agent : {{tasks.agent}}</div>
+          <div class="row">
+              <div class="col-xs-6 fs10">
+                <span  style="color: rgb(255, 153, 0);border: 1px solid rgb(255, 153, 0);padding: 2px 6px;border-radius: 3px;">
+                  <b>{{tasks.status}}</b>
+                </span>
+              </div>
+              <div class="col-xs-6 fs10 c_0066FF">{{tasks.last_updated|date: 'MMM-dd-yy hh:mm a'}}</div>
+          </div>
+      </div>
+
+       <div *ngIf="tasks.status==='ASSIGN AGENT'"  class="revisitCards">
+          <div class="row fs10">{{tasks.name}}</div>
+          <div class="row fs10">Agent : {{tasks.agent}}</div>
+          <div class="row">
+              <div class="col-xs-6 fs10">
+                <span  style="color: rgb(255, 153, 0);border: 1px solid rgb(255, 153, 0);padding: 2px 6px;border-radius: 3px;">
+                  <b>{{tasks.status}}</b>
+                </span>
+              </div>
+              <div class="col-xs-6 fs10 c_0066FF">{{tasks.last_updated|date: 'MMM-dd-yy hh:mm a'}}</div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div *ngIf="unAssigendListDisplay" class="mt10">
+    <div class="row"  *ngFor="let tasks of totalTasks.list.Unassigned">
+       <div style="background: #E6E6E6;margin: 3px 10px;padding: 2px 6px;border-left: 5px solid rgb(255, 153, 0);border-radius: 3px;">
+            <div class="row fs10">{{tasks.name}}</div>
+            <div class="row fs10">Agent : Not Assigned</div>
+            <!--<div class="row">
+                <div class="col-xs-6 fs10">
+                  <span  style="color: rgb(255, 153, 0);border: 1px solid rgb(255, 153, 0);padding: 2px 6px;border-radius: 3px;">
+                    <b>{{tasks.status}}</b>
+                  </span>
+                </div>
+                <div class="col-xs-6 fs10 c_0066FF">{{tasks.last_updated|date: 'MMM-dd-yy hh:mm a'}}</div>
+            </div>-->
+        </div>
+    </div>
+  </div>
+
+</section>
+
+<!--<footer data-toggle="modal" data-target="#addtask" style="position: fixed; bottom: 10px; right: 5px; height:50px;width:50px;border-radius: 100%;background-color: #363636;line-height: 50px;text-align: center;">
+    <i class="fa fa-plus" style="color:#fff;" aria-hidden="true"></i>
+</footer>--><!--(click)="addTask()" -->
+
+<!-- Modal -->
+<!--<div id="addtask" class="modal fade" role="dialog">
+  <div class="modal-dialog">-->
+
+    <!-- Modal content-->
+    <!--<div class="modal-content">
+      <div class="modal-header" style="background-color:  rgba(204, 204, 204, 1);padding:6px;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <span class="modal-title fs14">Add a task to this group</span>
+      </div>
+      <div class="modal-body">
+           <div class="row">
+              <div class="row fs12 c_0066FF"> Date & time</div>                
+              <input class="col-xs-4 color_4F4F4F fs14 p0 form-control modalForm tac"  date-only="true" style="background-color:  rgba(204, 204, 204, 1);"  name="daterangeInput" daterangepicker id="taskDate" [options]="optionsTask" (click)='hidedate()' (selected)="selectedTaskDate($event)">
+          </div>
+
+          <div class="row fs12 c_0066FF">Task description* </div>
+          <div class="row">
+            <textarea class="form-control fs12" required placeholder="ex: IPO, Loan, Collection, Insuarance policy etc..."  [(ngModel)]=taskDesc> </textarea>
+          </div>
+
+          <div class="row fs12 c_0066FF">Customer* </div>
+          <div class="row">
+            <input class="form-control modalForm" required placeholder="Search Customer" (focus)="showCustomerList = true;"  (keyup)="custmerNameAuto($event)" [(ngModel)]=custAutoComplete/>
+          </div>  
+          <div class="searchResultsCss" *ngIf="customersData.length>1">
+            <div *ngIf="showCustomerList">
+              <div *ngFor="let searchValue of customersData">
+                <div class="searchOptionCss" data-id={{searchValue.id}} id={{searchValue.addresses[0].id}} (click)="addToCustomer($event,searchValue.id);showCustomerList = false"> {{searchValue.name}}
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+          <div class="row">
+              <div class="row fs12 c_0066FF">Agent</div>
+              <div class="row">
+                <input class="form-control modalForm" placeholder="Search Agent" (keyup)="agentNameAuto($event)" [(ngModel)]=agentAutoComplete />
+              </div>
+
+              <div class="searchAgentCss" *ngIf="allAgentsData.length>1; then showAgentList">
+                <div *ngFor="let searchValue of allAgentsData">
+                  <div class="searchOptionCss"  id={{searchValue.id}} (click)="addToAgent($event);showAgentList = false"> {{searchValue.name}}</div>
+                </div>
+              </div>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-default doneButton pull-right" (click)="doneTask()" data-dismiss="modal">Done</button>
+          </div>  
+      </div>-->
+      <!--<div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>-->
+    <!--</div>
+  </div>
+</div>-->
+
+
+<img *ngIf="loading" class="movingLoader" src="../assets/pink_loader.gif" />
+<img *ngIf="loading" class="lokraImgLoader" src="../assets/favicon.png" />

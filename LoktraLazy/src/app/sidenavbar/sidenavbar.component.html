@@ -1,0 +1,36 @@
+<a routerLink="/dashboard" [routerLinkActive]="['active']" (click)="closeNav('dashboard')" >
+    <i  class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;&nbsp;Dashboard
+</a>
+<a routerLink="/members" [routerLinkActive]="['active']" (click)="closeNav('members')">
+    <i class="fa fa-users" aria-hidden="true"></i>
+    &nbsp;&nbsp;Members
+</a>
+<a routerLink="/lazy/memberdetails" [routerLinkActive]="['active']" (click)="closeNav('lazy/memberdetails')">
+    <i class="fa fa-map" aria-hidden="true"></i>&nbsp;&nbsp;Tracking
+</a>
+
+<a routerLink="/lazy/leaves" [routerLinkActive]="['active']" (click)="closeNav('lazy/leaves')">
+    <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Leaves
+</a>
+<a routerLink="/lazy/attendance" [routerLinkActive]="['active']" (click)="closeNav('lazy/attendance')">
+        <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Attendance
+</a>
+<a class="logoutLink" (click)="logOut()">
+    <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;Logout
+</a>
+
+    <!--<a><i class="fa fa-question-circle"></i>&nbsp;&nbsp;Help</a>-->
+<footer class="navFooter">
+    <div class="row footerRow">
+        <div class="col-xs-2 p0">
+            <img src="../assets/favicon.png" class="footerIcon">
+        </div>
+        <div class="col-xs-8 p0 tac">  
+            <small> 
+                <span style=""> powered by </span>
+                <b class="companyFooter">Loktra</b>
+            </small>
+        </div>  
+        <div class="col-xs-2 p0"></div>
+    </div>
+</footer>

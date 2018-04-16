@@ -1,0 +1,89 @@
+<div class="body">
+    <!--<div class="logo">
+      <img src="../../assets/logo.png" alt="">
+    </div>-->
+    <div class="logo-head font_family">
+      Loktra
+    </div>
+    <div>
+      	<div class="login-card font_family">
+          	<div class="login-head font_family">Login to {{orgName}}</div>
+          	<div *ngIf="error" class="error">{{error}}</div>
+          	<div class="form">
+                <div class="field">
+    				      <label class="field__label font_family" for="input-email">Enter your E-mail or Phone</label>
+    				      <input type="text" class="field__input one-column-form__input--text" name="email" id="email" value="" #email placeholder="Enter your E-mail or Phone" [(ngModel)]=dynEmail>
+    				    </div>
+
+    				    <div class="field mt20">
+    				      <label class="field__label font_family" for="input-email">Password</label>
+    				      <input type="password" class="field__input one-column-form__input--text" name="password" value="" #password placeholder="Password" [(ngModel)]=dynPass>
+    				    </div>
+          	</div>
+
+          	<span class="info">Password is case sensitive</span>
+          	<div class="moreLinks">
+            		<div class="right font_family"><button class="continue_button" (click)="login()">Continue</button></div>
+                <img *ngIf="loading" class="movingLoader" src="../assets/pink_loader.gif" />
+
+                <img *ngIf="loading" class="lokraImgLoader" src="../assets/favicon.png" />
+              
+            		<div class="forgot left font_family"><button class="forget_button" (click)="forget_pass()" >Forgot Password?</button></div>
+          	</div>
+        </div>
+      	<div class="forget-card hide">
+          	<div class="login-head">For security reasons</div>
+          	<div *ngIf="error" class="error">{{error}}</div>
+          	<div class="form">
+            		<div class="field">
+    				  	    <label class="field__label font_family" for="input-email" >Enter your E-mail or Phone</label>
+            	  		<input type="text"  id="forgt_id" class="field__input one-column-form__input--text" name="email" value="" #email placeholder="Enter your E-mail or Phone" [(ngModel)]=secEmail/>
+            	  </div>	
+          	</div>
+          	<div class="moreLinks">
+            		<div><button class="otp" id="OTP" (click)="getOTP()">GET OTP</button></div>
+          	</div>
+      	</div>
+
+      	<div class="getOtp-card hide">
+          	<div class="login-head"><span>OTP send to {{otpDevice}}</span></div>
+          	<div *ngIf="error" class="error">{{error}}</div>
+          	<div class="form">
+          		  <div class="field">
+  				  	     <label class="field__label font_family" for="input-email">Enter OTP</label>
+          	  		<input type="text" class="field__input one-column-form__input--text" value=""  placeholder="Enter OTP" id="OTP_value" [(ngModel)]=secOTP/>
+          	  	</div>	
+          	</div>
+          	<div class="moreLinks">
+          	<div class="left"><button class="otpAgain" (click)="dintGetOTP()">I DID NOT GET OTP</button></div>
+            		<div class="right"><button class="AfterOtp" (click)="enterOTP()">Confirm</button></div>
+          	</div>
+      	</div>
+
+      	<div class="changePassword-card hide">
+        	<div class="login-head">Choose a new password</div>
+        	<div *ngIf="error" class="error">{{error}}</div>
+        	<div class="form">
+        		<div class="field">
+				  	<label class="field__label font_family" for="input-email">New Password</label>
+        	  		<input type="password" class="field__input one-column-form__input--text" value="" placeholder="New Password" id="orgPass" [(ngModel)]=newPassword/>
+        	  	</div>	
+        	  	<div class="field mt20">
+				  	<label class="field__label font_family" for="input-email">Re-enter New Password</label>
+        	  		<input type="password" class="field__input one-column-form__input--text" value=""placeholder="Re-enter New Password" id="rePass" [(ngModel)]=rePassword/>
+        	  	</div>	
+        	</div>
+        	<div class="moreLinks">
+          		<div class="right"><button class="AfterPass AfterOtp" (click)="confirmPass()">Confirm</button></div>
+        	</div>
+      	</div>
+
+      	<div class="success-card hide">
+        	<div class="login-head tac">Your password has been reset successfully</div>
+        	<img width="100" width="100" src="../../assets/loginSuccess.png" alt="Successfully changed password" class="successImg"/>
+        	<div class="moreLinks">
+          		<div class="loginButton"><button style="width:94%;" class="AfterOtp" (click)="success()">Login</button></div>
+        	</div>
+      	</div>
+    </div>
+</div>

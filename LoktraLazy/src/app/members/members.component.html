@@ -1,0 +1,348 @@
+<header class="header" (swipeleft)="swipe('left')" (swiperight)="swipe('right')">
+ <div id="mySidenav" class="sidenav" ng-swipe-right="openNav()" (swipeleft)="swipe('left')" (swiperight)="swipe('right')" ng-show="showMenu">
+    <div class="row" class="headerRow">
+      <a class="row" href="javascript:void(0)" class="closebtn" (click)="closeNav()">
+        <i class="fa fa-times fs20" aria-hidden="true"></i>
+      </a>
+      <div class="pull-left fsletterDiv">
+        <div class="fsletter">{{firstLetter}}{{secondLetter}}</div>
+      </div>
+      <div class="row w70 pull-right">
+        <p class="pm_b0 authName">
+          <b>{{agentName}}</b>
+        </p>
+        <p class="pm_b0 orgName">
+          <b>{{orgName}}</b>
+        </p>
+        <div class="pm_b0" ng-repeat="role in roles">
+            {{roles}}            
+        </div>
+        <!--<button class="vp_b"> View profile</button>-->
+      </div>  
+    </div>      
+    <app-sidenavbar></app-sidenavbar>
+  </div>
+  <div class="row top_title membersHead">
+    <div class="col-xs-2" (click)="openNav()">
+      <span> <i class="fa fa-bars fs20" aria-hidden="true"></i></span> 
+    </div>
+    <div class="col-xs-10 font_family">
+      Members
+    </div>
+  </div>
+</header>
+
+<div id="page" ng-cloak ng-app='myapp' ng-controller="MyCtrl" ng-swipe-right="showMenu = true">
+
+<section style="background-color: #FFFFFF;box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.298039215686275);    position: relative;margin-top: 60px; " (swipeleft)="swipe('left')" (swiperight)="swipe('right')">
+  <div class="row fs14" style="width:100%;padding:10px 10px;">
+    <div class="col-xs-4 color_4F4F4F fs14 PNarrows" style="padding:0px 0px;text-align:left;" (click)="previous()"> <i class="fa fa-chevron-left PNarrows" aria-hidden="true"></i>&nbsp;&nbsp; Previous
+    </div>
+    <div class="col-xs-4 color_4F4F4F fs14 p0"  style="text-align: center;" name="daterangeInput" daterangepicker [options]="options" id="mainDate" (selected)="selectedDate($event)">{{DaytoDisplay}} <i class="fa fa-caret-down" style=""  aria-hidden="true"></i>
+    </div>
+    <div class="col-xs-4 color_4F4F4F  PNarrows" style=";text-align:right;padding:0px 0px;" (click)="next()">Next&nbsp;&nbsp;<i class="fa fa-chevron-right fs14 PNarrows" style="padding:3px;" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="row fs14" style="width:100%;padding:10px 10px;">
+      <div class="col-xs-6 rCMf" style="float:left;" routerLink="/departments">Department :<span style="color:#0066FF;font-weight: bold;">{{functionName}}</span>
+      </div>
+      <div class="col-xs-6 rCMf" style="float:right;" routerLink="/regions">Region :<span style="color:#0066FF;font-weight: bold;"> {{regionName}} </span> 
+      </div>
+  </div>
+</section>
+
+<section style="background-color: #F2F2F2;">
+    <div class="row" style="padding:13px 5px 0px 5px;">
+        <div class="col-xs-8 p0">
+        <div class="col-xs-4 tac fs12 prl3"><div class="onlineButton" id="onlinenumber" data-id="onlinenumber" (click)="onlinenumber($event)" >{{totalOnlineNumber}}</div></div>
+        <div class="col-xs-4 tac fs12 prl3"><div class="offlineButton" id="offlinenumber" data-id="offlinenumber" (click)="offlinenumber($event)"> {{totalOfflineNumber}}</div></div>
+        <div class="col-xs-4 tac fs12 prl3"><div class="inactiveButton" id="inactivenumber" data-id="inactivenumber"  (click)="inactivenumber($event)">{{totalInactiveNumber}}</div></div>
+        </div> 
+        <div class="col-xs-4 p0">
+            <!---<select id="selectedRole" style="background: #fff;" [(ngModel)]="levelNum" (ngModelChange)="sectedOption()">
+              <option value="all">All</option>
+              <option value="manager">Managers</option>
+              <option value="admin">Admins</option>
+              <option value="agent">Agents</option>
+            </select>-->
+            <select id="selectRole" (ngModelChange)="sectedOption()" style="float:right;">
+                <option value="all" selected="selected">All</option>
+                <option value="manager">Managers</option>
+                <option value="admin">Admins</option>
+                <option value="agent">Agents</option>
+            </select>
+
+        </div>
+    </div>  
+</section>
+
+<section >
+  <div class="row" style="background-color: #F2F2F2;"> 
+    <div style="position: relative;margin-top: 20px;padding:0px 10px;">
+      <div class="fixRowHeight row_hover" *ngFor="let member of memberData" >
+          <div class="row eachMember online" *ngIf="member.status==='ONLINE'"  ng-show="showDetails">
+            <div class="row" style="margin:auto;width:90%;">
+              <div class="col-xs-2 p0 fs12" style="">
+                <div style="    background-color: #989898;color: #fff;text-align: center;border-radius: 100%; height: 32px; width: 32px; line-height: 32px;">   {{member.name[0]}}
+                </div>
+              </div>
+              <div class="col-xs-8 p0 fs12">
+                <b>{{member.name}}</b><br/>
+                <i class="fa fa-circle" *ngIf="member.status==='ONLINE'" style="color:#00E53D;" aria-hidden="true"></i>
+                <i class="fa fa-circle" *ngIf="member.status==='OFFLINE'" style="color:#FF4D4D;" aria-hidden="true"></i>
+                <i class="fa fa-circle" *ngIf="member.status==='INACTIVE'" style="color:#666666 ;" aria-hidden="true"></i>
+                <span> {{member.status}}</span>
+              </div>
+              <div class="col-xs-2 p0 fs12" *ngIf="member.mobile"> 
+                <a href="tel:{{member.mobile}}">
+                  <i class="fa fa-phone" style="color: #000;font-size: 18px;" aria-hidden="true"></i>
+                </a>
+              </div>          
+            </div>
+            <div class="row" *ngIf="member.user_roles[0].roles!='manager'">
+              <table id="memActivity">
+                <thead> 
+                  <tr>
+                    <th class="fs12 tac c_AFAFA7">PENDING</th>
+                    <th class="fs12 tac c_AFAFA7">SUCCESS</th>
+                    <th class="fs12 tac c_AFAFA7">FAILED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fs12 tac pending">{{member.pending_tasks}}</td>
+                    <td class="fs12 tac success">{{member.successful_tasks}}</td>
+                    <td class="fs12 tac failed">{{member.failed_tasks}}</td>
+                  </tr>
+                </tbody>
+              </table>   
+            </div> 
+          </div>
+
+          <div class="row eachMember offline"  *ngIf="member.status==='OFFLINE'" ng-show="showDetails">
+            <div class="row" style="margin:auto;width:90%;">
+              <div class="col-xs-2 p0 fs12" style="">
+                  <div style="    background-color: #989898;color: #fff;text-align: center;border-radius: 100%; height: 32px; width: 32px; line-height: 32px;">  {{member.name[0]}}</div>
+              </div>
+              <div class="col-xs-8 p0 fs12"><b>{{member.name}}</b><br/>
+                <i class="fa fa-circle" *ngIf="member.status==='ONLINE'" style="color:#00E53D;" aria-hidden="true"></i>
+                <i class="fa fa-circle" *ngIf="member.status==='OFFLINE'" style="color:#FF4D4D;" aria-hidden="true"></i>
+                <i class="fa fa-circle" *ngIf="member.status==='INACTIVE'" style="color:#666666 ;" aria-hidden="true"></i>
+                <span> {{member.status}}</span>
+              </div>
+              <div class="col-xs-2 p0 fs12" *ngIf="member.mobile"> 
+                <a href="tel:{{member.mobile}}"><i class="fa fa-phone" style="color: #000;
+                font-size: 18px;" aria-hidden="true"></i></a>
+              </div>          
+            </div>
+            <div class="row" *ngIf="member.user_roles[0].roles!='manager'">
+              <table id="memActivity">
+                <thead> 
+                  <tr>
+                    <th class="fs12 tac c_AFAFA7">PENDING</th>
+                    <th class="fs12 tac c_AFAFA7">SUCCESS</th>
+                    <th class="fs12 tac c_AFAFA7">FAILED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fs12 tac pending">{{member.pending_tasks}}</td>
+                    <td class="fs12 tac success">{{member.successful_tasks}}</td>
+                    <td class="fs12 tac failed">{{member.failed_tasks}}</td>
+                  </tr>
+                </tbody>
+              </table>   
+            </div> 
+          </div>
+
+          <div class="row eachMember inactive"  *ngIf="member.status==='INACTIVE'" ng-show="showDetails">
+            <div class="row" style="margin:auto;width:90%;">
+              <div class="col-xs-2 p0 fs12" style="">
+                  <div style="    background-color: #989898;color: #fff;text-align: center;border-radius: 100%; height: 32px; width: 32px; line-height: 32px;">  {{member.name[0]}}</div>
+              </div>
+              <div class="col-xs-8 p0 fs12"><b>{{member.name}}</b><br/>
+                <i class="fa fa-circle" *ngIf="member.status==='ONLINE'" style="color:#00E53D;" aria-hidden="true"></i>
+                <i class="fa fa-circle" *ngIf="member.status==='OFFLINE'" style="color:#FF4D4D;" aria-hidden="true"></i>
+                <i class="fa fa-circle" *ngIf="member.status==='INACTIVE'" style="color:#666666 ;" aria-hidden="true"></i>
+                <span> {{member.status}}</span>
+              </div>
+              <div class="col-xs-2 p0 fs12" *ngIf="member.mobile"> 
+                <a href="tel:{{member.mobile}}"><i class="fa fa-phone" style="color: #000;
+                font-size: 18px;" aria-hidden="true"></i></a>
+              </div>          
+            </div>
+            <div class="row" *ngIf="member.user_roles[0].roles!='manager'">
+              <table id="memActivity">
+                <thead> 
+                  <tr>
+                    <th class="fs12 tac c_AFAFA7">PENDING</th>
+                    <th class="fs12 tac c_AFAFA7">SUCCESS</th>
+                    <th class="fs12 tac c_AFAFA7">FAILED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fs12 tac pending">{{member.pending_tasks}}</td>
+                    <td class="fs12 tac success">{{member.successful_tasks}}</td>
+                    <td class="fs12 tac failed">{{member.failed_tasks}}</td>
+                  </tr>
+                </tbody>
+              </table>   
+            </div> 
+          </div>
+
+
+          <div class="row eachMember others"  *ngIf="member.status==='OTHERS'" ng-show="showDetails">
+            <div class="row" style="margin:auto;width:90%;">
+              <div class="col-xs-2 p0 fs12" style="">
+                  <div style="    background-color: #989898;color: #fff;text-align: center;border-radius: 100%; height: 32px; width: 32px; line-height: 32px;">  {{member.name[0]}}</div>
+              </div>
+              <div class="col-xs-8 p0 fs12"><b>{{member.name}}</b><br/>
+                <i class="fa fa-circle" *ngIf="member.status==='ONLINE'" style="color:#00E53D;" aria-hidden="true"></i>
+                <i class="fa fa-circle" *ngIf="member.status==='OFFLINE'" style="color:#FF4D4D;" aria-hidden="true"></i>
+                <i class="fa fa-circle" *ngIf="member.status==='INACTIVE'" style="color:#666666 ;" aria-hidden="true"></i>
+                <span> {{member.status}}</span>
+              </div>
+              <div class="col-xs-2 p0 fs12" *ngIf="member.mobile"> 
+                <a href="tel:{{member.mobile}}"><i class="fa fa-phone" style="color: #000;
+                font-size: 18px;" aria-hidden="true"></i></a>
+              </div>          
+            </div>
+            <div class="row" *ngIf="member.user_roles[0].roles!='manager'">
+              <table id="memActivity">
+                <thead> 
+                  <tr>
+                    <th class="fs12 tac c_AFAFA7">PENDING</th>
+                    <th class="fs12 tac c_AFAFA7">SUCCESS</th>
+                    <th class="fs12 tac c_AFAFA7">FAILED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fs12 tac pending">{{member.pending_tasks}}</td>
+                    <td class="fs12 tac success">{{member.successful_tasks}}</td>
+                    <td class="fs12 tac failed">{{member.failed_tasks}}</td>
+                  </tr>
+                </tbody>
+              </table>   
+            </div> 
+          </div>
+        <div class="row" *ngIf="member.length==0"> 
+            <img src="../assets/agentEmptyList.png" style="width:40px;height:40px;">
+        </div>  
+      </div>
+    </div> 
+  </div>
+</section> 
+</div>
+<footer style="position: fixed; bottom: 10px; right: 5px; height:50px;width:50px;border-radius: 100%;background-color: #363636;line-height: 50px;text-align: center;" (click)="openModal()"><!--successErrorModal.show()-->
+    <i class="fa fa-plus" style="color:#fff;" aria-hidden="true"></i>
+</footer><!--(click)="addTask()" data-toggle="modal" data-target="#addtask" -->
+
+<!-- Modal -->
+<!--<div id="addtask" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+-->
+    <!-- Modal content-->
+    <!--<div class="modal-content">
+      <div class="modal-header" style="background-color:  rgba(204, 204, 204, 1);padding:6px;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <span class="modal-title fs14">Add a task to this group</span>
+      </div>
+      <div class="modal-body">
+           <div class="row">
+              <div class="row fs12 c_0066FF"> Date & time</div>                
+               <input class="col-xs-4 color_4F4F4F fs14 p0 form-control modalForm"  date-only="true" style="text-align: center;background-color:  rgba(204, 204, 204, 1);"  name="daterangeInput" daterangepicker id="taskDate" [options]="optionsTask" (click)='hidedate()' (selected)="selectedTaskDate($event)">
+          </div>
+
+          <div class="row fs12 c_0066FF">Task description* </div>
+          <div class="row"><textarea class="form-control fs12" required placeholder="ex: IPO, Loan, Collection, Insuarance policy etc..."  [(ngModel)]=taskDesc> </textarea></div>
+
+          <div class="row fs12 c_0066FF">Customer* </div>
+          <div class="row"><input class="form-control modalForm" required placeholder="Search Customer" (focus)="showCustomerList = true;"  (keyup)="custmerNameAuto($event)" [(ngModel)]=custAutoComplete/></div>  
+          <div class="searchResultsCss" *ngIf="customersData?.length>=1showCustomerList">
+            <div>
+              <div *ngFor="let searchValue of customersData">
+                <div class="searchOptionCss" data-id={{searchValue.id}} id={{searchValue.addresses[0].id}} (click)="addToCustomer($event,searchValue.id);showCustomerList = false"> {{searchValue.name}}</div>
+              </div>
+            </div>
+          </div>
+ 
+          <div class="row">
+              <div class="row fs12 c_0066FF">Agent</div>
+              <div class="row"> 
+                <input class="form-control modalForm" placeholder="Search Agent" (keyup)="agentNameAuto($event)" [(ngModel)]=agentAutoComplete />
+              </div>
+
+              <div class="searchAgentCss" *ngIf="allAgentsData?.length>=1&&showAgentList">
+                  <div *ngFor="let searchValue of allAgentsData">
+                    <div class="searchOptionCss"  id={{searchValue.id}} (click)="addToAgent($event);showAgentList = false"> {{searchValue.name}}</div>
+                  </div>
+              
+              </div>
+
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-default doneButton pull-right" (click)="doneTask()" >Done</button>
+          </div>  
+      </div>-->
+      <!-- data-dismiss="modal" <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>-->
+    <!--</div>
+  </div>
+</div>-->
+
+
+<div class="modal fade in" bsModal #successErrorModal id="successErrorModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content" #successErrorModalContent>
+      <div class="modal-header customerModalHeaderCss" #successErrorModalHeader style="background-color:  rgba(204, 204, 204, 1);padding:6px;">
+        <div class="modal-header" style="background-color:  rgba(204, 204, 204, 1);padding:6px;">
+          <button type="button" class="close customerModelCloseBtnCss" id="successErrorModalCloseBtn" aria-label="Close" (click)="closeModal()" #successErrorModalClose >×</button><!--successErrorModal.hide()-->
+          <span class="modal-title fs14">Add a task to this group</span>
+        </div>
+      </div>
+
+      <div class="modal-body customerModelBodyCss" id="successErrorModalBody">
+          <div class="row">
+            <div class="row fs12 c_0066FF"> Date & time</div>                
+               <button class="col-xs-4 color_4F4F4F fs14 p0 form-control modalForm"  date-only="true" style="text-align: center;background-color:  rgba(204, 204, 204, 1);"  name="daterangeInput" daterangepicker id="taskDate" [options]="optionsTask" (click)='hidedate()' (selected)="selectedTaskDate($event)">{{taskDateToDisplay}}</button>
+          </div>
+
+          <div class="row fs12 c_0066FF">Task description* </div>
+          <div class="row"><textarea class="form-control fs12" required placeholder="ex: IPO, Loan, Collection, Insuarance policy etc..."  [(ngModel)]=taskDesc> </textarea></div>
+
+          <div class="row fs12 c_0066FF">Customer* </div>
+          <div class="row"><input class="form-control modalForm" required placeholder="Search Customer" (focus)="showCustomerList = true;"  (keyup)="custmerNameAuto($event)" [(ngModel)]=custAutoComplete/></div>  
+          <div class="searchResultsCss" *ngIf="customersData.length>=1">
+            <div *ngIf="showCustomerList">
+              <div *ngFor="let searchValue of customersData">
+                <div class="searchOptionCss" data-id={{searchValue.id}} id={{searchValue.addresses[0].id}} (click)="addToCustomer($event,searchValue.id);showCustomerList = false"> {{searchValue.name}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="row fs12 c_0066FF">Agent</div>
+              <div class="row"> 
+                <input class="form-control modalForm" placeholder="Search Agent" (keyup)="agentNameAuto($event)" [(ngModel)]=agentAutoComplete />
+              </div>
+              <div class="searchAgentCss" *ngIf="allAgentsData?.length>=1&&showAgentList">
+                  <div *ngFor="let searchValue of allAgentsData">
+                    <div class="searchOptionCss"  id={{searchValue.id}} (click)="addToAgent($event);showAgentList = false"> {{searchValue.name}}</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row" id="successErrorModalfooter">
+        <div class="col-xs-6"></div>
+        <div class="col-xs-6">
+          <button type="button" class="btn btn-default doneButton pull-right" data-dismiss="modal" id="successErrorModalfooter_close_btn" (click)="closeTask()">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<img *ngIf="loading" class="movingLoader" src="../assets/pink_loader.gif" />
+<img *ngIf="loading" class="lokraImgLoader" src="../assets/favicon.png" />

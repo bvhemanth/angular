@@ -1,0 +1,465 @@
+<header>
+	<div class="row agentDetailheader">
+		<div class="col-xs-2">
+			<a (click)='backPage()'>
+				<img id="back" src="./../assets/login-arrow-back.png" />
+			</a>
+		</div>
+		<div class="col-xs-10 font_family">
+			Agent detail	
+		</div>
+	</div>
+</header>
+
+<section style="background-color: #FFFFFF;box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.298039215686275);    position: relative; ">
+  	<div class="row fs14" style="width:100%;padding:10px 10px;">
+    	<div class="col-xs-4 color_4F4F4F fs14" style="padding:0px 0px;text-align:left;" (click)="previous()"> 
+    		<i class="fa 	fa-chevron-left"  aria-hidden="true"></i>&nbsp;&nbsp; Previous
+    	</div>
+    	<div class="col-xs-4 color_4F4F4F fs14 p0"  style="text-align: center;" name="daterangeInput" daterangepicker [options]="options" id="mainDate" (selected)="selectedDate($event)">	 	
+    		{{DaytoDisplay}} 
+    		<i class="fa fa-caret-down" style=""  aria-hidden="true"></i>
+    	</div>
+    	<div class="col-xs-4 color_4F4F4F " style=";text-align:right;padding:0px 0px;" (click)="next()">Next&nbsp;&nbsp;
+    		<i class="fa fa-chevron-right fs14" style="padding:3px;"  aria-hidden="true"></i>
+    	</div>
+  	</div>
+  	<!---<div class="row fs14" style="width:100%;padding:10px 10px;">
+      <div class="col-xs-6 rCMf" style="float:left;" data-toggle="modal" data-target="#myModal">Function :<span style="color:#0066FF;font-weight: bold;" (click)="openDialog()">{{functionName}} </span>
+      </div>
+      <div class="col-xs-6 rCMf" style="float:right;">Region :<span style="color:#0066FF;font-weight: bold;">{{regionName}} </span> 
+      </div>
+  	</div>-->
+</section>
+
+<section>
+	<div class="row" style="background-color: #F1F1F1;padding:10px;">
+		<div class="col-xs-2"> <img  src={{agentAvatar}}  class="avatar"/>
+			<i class="fa fa-circle" *ngIf="agentStatus==='ONLINE'" style="color:#00E53D;    position: absolute;left: 38px;top: 21px;border: 2px solid #fff;border-radius: 100%;font-size: 8px;" aria-hidden="true"></i>
+	        <i class="fa fa-circle" *ngIf="agentStatus==='OFFLINE'" style="color:#FF4D4D;    position: absolute;left: 38px;top: 21px;border: 2px solid #fff;border-radius: 100%;font-size: 8px;" aria-hidden="true"></i>
+	        <i class="fa fa-circle" *ngIf="agentStatus==='INACTIVE'" style="color:#666666 ;    position: absolute;left: 38px;top: 21px;border: 2px solid #fff;border-radius: 100%;font-size: 8px;" aria-hidden="true"></i>
+		</div>
+		<div class="col-xs-8 tac">
+			{{agentName}}<br/><!--{{roles}}-->
+		</div>
+		<div class="col-xs-1 p0">
+			<a href="tel:{{agentMobile}}">
+				<i class="fa fa-phone fs18" style="color: #000;" aria-hidden="true"></i>
+			</a>
+	 	</div>
+		<div class="col-xs-1 p0" style="text-align: right;">
+			<!--<i class="fa fa-ellipsis-h" aria-hidden="true" data-toggle="dropdown"></i>
+			<div class="dropdown"><p class="simple-card"><input class="radion_button pull-left radio_hide" name="target" type="radio" data-with_subtree="false" data-id="'+node.id+'" data-name="'+node.name+'"/>testing</p></div>-->
+
+			<!--<div class="dropdown">
+				<i class="fa fa-ellipsis-h" style="float:right;" aria-hidden="true" data-toggle="dropdown" style="transform: rotate(90deg);"></i>
+				<div class="dropdown-content">
+					<div (click)="editRms()">edit</div>
+					<div (click)="deleteRms()">delete</div>
+				</div>
+			</div>-->
+
+		</div>
+	</div>
+	<div class="row tac"> 
+		<button class="btn" id="down" (click)="down()" style="position: relative;background-color: #fff;border-radius: 100%;    top: -13px;margin: auto;display: block;    outline: none;box-shadow: 0px 2px 5px #CFCFCF;padding: 5px;"><i _ngcontent-c1="" aria-hidden="true" class="fa fa-chevron-down fs14 c_ABA" style="padding:3px;"></i></button>
+	</div>
+	<div class="row" id="updiv" style="background-color: #F1F1F1;display: none;">
+		<div class="fs12 row">
+			<div class="col-xs-1 p0"></div> 
+			<div class="col-xs-10 p0 tac fs14 mb10">Total working hours : {{totalWorkingHours}}</div>
+			<div class="col-xs-1 p0"></div>
+		</div>
+		<div class="fs10 row">
+			<div class="col-xs-1 p0"></div> 
+			<div class="col-xs-10 p0 tac"><b>LAST ACTIVITY : {{lastActivity|date: 'hh:mm a dd-MMMM'}} </b></div>
+			<div class="col-xs-1"></div>
+		</div>
+		<div class="fs10 row" style="padding-bottom:10px;">
+			<div class="col-xs-2 p0"></div>
+			<div class="col-xs-8 p0 tac">
+				<i class="fa fa-user det_shift_icon fs12" *ngIf="agentShift==='ON'" style="color: rgb(0, 204, 51);"></i>
+				<i class="fa fa-user det_shift_icon fs12" *ngIf="agentShift==='OFF'" style="color: red;"></i>
+				<span *ngIf="agentShift==='ON'" style="color:#00E53D;">SHIFT {{agentShift}} </span>
+				<span *ngIf="agentShift==='OFF'" style="color:#FF4044;">SHIFT {{agentShift}} </span>
+				&nbsp;&nbsp;
+				<i class="fa fa-map-marker c_00E" *ngIf="agentGps==='ON'" aria-hidden="true"></i>
+				<i class="fa fa-map-marker c_FF4" *ngIf="agentGps==='OFF'" aria-hidden="true"></i>
+				<span *ngIf="agentGps==='ON'" style="color:#00E53D;">GPS {{agentGps}} </span>
+				<span *ngIf="agentGps==='OFF'" style="color:#FF4044;">GPS {{agentGps}} </span>
+				&nbsp;&nbsp;
+				<span *ngIf="batteryStatus<50" class="c_FF4"><i class="fa fa-battery-half c_FF4" aria-hidden="true"></i>{{batteryStatus}}%</span>
+				<span class="c_00E" *ngIf="batteryStatus>49"> <i  class="fa fa-battery-three-quarters c_00E" aria-hidden="true"></i> {{batteryStatus}}%</span>
+			</div>
+			<div class="col-xs-2 p0"></div>
+		</div>
+	</div>
+	<div class="row tac"> <button class="btn" id="up" style="display:none;position: relative;background-color: #fff;border-radius: 100%;top: -12px;    outline: none;box-shadow: 0px 2px 5px #CFCFCF;padding: 5px;" (click)="up()"><i _ngcontent-c1="" aria-hidden="true" class="fa fa-chevron-up fs14 c_ABA" style="padding:3px;"></i></button></div>
+</section>
+
+<section style="margin-top:10px;">
+	<div class="row" style="width:90%;margin:auto;    box-shadow: 1px 2px 5px #ddd;">
+		<div class="col-xs-6 fs10 activeTab c_333 p0 tac" data-id="taskview" (click)="taskViewDisplay($event)" style="border:1px solid #C4DBFF;padding:3px 5px;" >TASK VIEW
+		</div>
+		<!--<div class="col-xs-4 fs10 c_333 p0 tac" data-id="mapview" (click)="mapViewDisplay($event)" style="border:1px solid #C4DBFF;padding:3px 5px;">MAP VIEW</div>-->
+		<div class="col-xs-6 fs10 c_333 p0 tac" data-id="travelview" (click)="travelViewDisplay($event)" style="border:1px solid #C4DBFF;padding:3px 5px;">TIME LINE
+		</div>
+	</div>
+</section>
+
+<section id="taskViewSec" style="margin-top: 15px">
+	<div class="fixRowHeight row_hover" *ngFor="let task of taskDetails">
+		<div *ngIf="task.status==='Pending'"   style="    background: #E6E6E6;
+    margin: 3px 10px;border-left: 5px solid rgb(255, 153, 0);padding:3px 0px 0px 10px;border-radius: 3px;">	
+			<div class="row fs12 c_333">
+				{{task.name}}
+			</div>
+			<div class="row fs12 c_999">Customer name : {{task.customer_details.name}}
+			</div>
+			<div class="row fs10 c_00C">
+				<div class="col-xs-6 p0">
+					<span *ngIf="task.status==='Pending'" style="color: rgb(255, 153, 0);border: 1px solid rgb(255, 153, 0);padding: 2px 6px;border-radius: 3px;line-height: 45px;">
+						<b>{{task.status}}</b>
+					</span>
+					<span *ngIf="task.status==='Success'" style="border: 1px solid #00CC33;padding: 2px 6px;border-radius: 3px;line-height: 45px;background-color: #fff;color:#00CC33;">
+						<b>{{task.status}}</b>
+					</span>
+					<span *ngIf="task.status==='Failed'" style="border: 1px solid #00CC33;padding: 2px 6px;border-radius: 3px;line-height: 45px;background-color: #fff;">
+						<b>{{task.status}}</b>
+					</span>
+				</div>
+				<div class="col-xs-6 p0" style="line-height: 45px;color:#1680F7;text-align: right;">
+					{{task.last_updated|date: 'yyyy-MM-dd HH:mm a'}}
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="task.status==='Failed'"   style="    background: #E6E6E6;
+    margin: 3px 10px;border-left: 5px solid #FF6262;padding:3px 0px 0px 10px;border-radius: 3px;">	
+			<div class="row fs12 c_333">
+				{{task.name}}
+			</div>
+			<div class="row fs12 c_999">Customer name : {{task.customer_details.name}}
+			</div>
+			<div class="row fs10 c_00C">
+				<div class="col-xs-6 p0">
+					<span *ngIf="task.status==='Pending'" style="color: rgb(255, 153, 0);border: 1px solid rgb(255, 153, 0);padding: 2px 6px;border-radius: 3px;line-height: 45px;">
+						<b>{{task.status}}</b>
+					</span>
+					<span *ngIf="task.status==='Success'" style="border: 1px solid #00CC33;padding: 2px 6px;border-radius: 3px;line-height: 45px;background-color: #fff;color:#00CC33;">
+						<b>{{task.status}}</b>
+					</span>
+					<span *ngIf="task.status==='Failed'" style="border: 1px solid #FF6262;padding: 2px 6px;border-radius: 3px;line-height: 45px;background-color: #fff;color:#FF6262;">
+						<b>{{task.status}}</b>
+					</span>
+				</div>
+				<div class="col-xs-6 p0" style="line-height: 45px;color:#1680F7;text-align: right;">
+					{{task.last_updated|date: 'yyyy-MM-dd HH:mm a'}}
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="task.status==='Success'"   style="    background: #E6E6E6;
+    margin: 3px 10px;border-left: 5px solid #00CC33;padding:3px 0px 0px 10px;border-radius: 3px;">	
+			<div class="row fs12 c_333">
+				{{task.name}}
+			</div>
+			<div class="row fs12 c_999">Customer name : {{task.customer_details.name}}
+			</div>
+			<div class="row fs10 c_00C">
+				<div class="col-xs-6 p0">
+					<span *ngIf="task.status==='Pending'" style="color: rgb(255, 153, 0);border: 1px solid rgb(255, 153, 0);padding: 2px 6px;border-radius: 3px;line-height: 45px;">
+						<b>{{task.status}}</b>
+					</span>
+					<span *ngIf="task.status==='Success'" style="border: 1px solid #00CC33;padding: 2px 6px;border-radius: 3px;line-height: 45px;background-color: #fff;color:#00CC33;">
+						<b>{{task.status}}</b>
+					</span>
+					<span *ngIf="task.status==='Failed'" style="border: 1px solid #FF6262;padding: 2px 6px;border-radius: 3px;line-height: 45px;background-color: #fff;color:#FF6262;">
+						<b>{{task.status}}</b>
+					</span>
+				</div>
+				<div class="col-xs-6 p0" style="line-height: 45px;color:#1680F7;text-align: right;">
+					{{task.last_updated|date: 'yyyy-MM-dd HH:mm a'}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="taskDetails.length===0" class="tac">
+		<img src="./../assets/emptyTaskView.png" style="width:100px;height:100px;"/>
+	</div>
+</section>
+
+<section id="travelLogSec" style="display:none;margin-top: 15px;padding: 5px 20px;">
+	<div class="row" style="min-height:70px;display: flex;" *ngFor="let log of travalLogDisp;let i = index;" >
+
+		<div *ngIf="log.activity_type!='stay_point'" class="col-xs-2 fs10 c_999 p0">{{log.timestamp|date: 'hh:mm a'}}</div>
+		<div *ngIf="log.activity_type==='stay_point'" class="col-xs-2 fs10 c_999 p0 tac">
+		   <span> {{log.duration_end_time|date: 'hh:mm a'}}</span>
+		   <div class="row tac">
+		   		<i class="fa fa-angle-up"></i>
+		   	</div>
+		   <span class="c_999">{{log.duration_start_time|date: 'hh:mm a'}}</span>
+		</div>
+		<div class="col-xs-2">
+			<img *ngIf="log.agent_app_activity==='SHIFT ON' || log.agent_app_activity==='PHONE ON'|| log.agent_app_activity==='GPS ON'" src="../assets/travel_log_shift_on.png" />
+			<img *ngIf="log.agent_app_activity==='SHIFT OFF'||log.agent_app_activity==='PHONE OFF'||log.agent_app_activity==='GPS OFF'" src="../assets/travel_log_shift_off.png" />
+			<img *ngIf="log.activity_type==='stay_point'" src="../assets/travel_log_stay_time.png" />
+			<img *ngIf="log.activity_type==='location'" src="../assets/travel_log_stay_time.png" />
+			<img *ngIf="log.activity_type==='task'" src="../assets/travel_log_stay_time.png" />
+			
+			<img *ngIf="log.activity_type==='current_location'" class="current_location" height='20px' width="20px" style="-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-o-transform: rotate(-90deg);transform: rotate(-90deg);" src="../assets/travel_log_direction_marker.png"/>
+			<div *ngIf="i!=travalLogDisp.length-1" style="width: 5px;height: 100%;color: #C37AFF;border-left: 5px solid;margin-left: 8px;flex: 1 0 100%;position: relative;align-items: stretch;">
+			</div>
+		</div> 
+		<div class="col-xs-8 p0">
+			<div class="fs10">
+				<span *ngIf="log.tag!=null">({{log.tag}})&nbsp;-&nbsp;</span>		
+				{{log.address}}
+			</div>
+			<!--<div class="fs10">{{log.activity_type}}</div>-->
+			<div class="row" *ngIf="log.activity_type==='stay_point'">
+				<span class="fs10 tac" style="background-color: rgba(0, 102, 255, 0.149019607843137);color: #0066FF;    border-radius: 2px;padding: 3px;margin-bottom: 6px ">Stay Time : {{log.duration}}</span>
+				
+			</div>
+			<div class="row" *ngIf="log.agent_app_activity==='SHIFT ON'">
+				<span class="fs10 tac" style="font-weight: 700;font-style: normal;font-size: 10px;color: #00CC33;background-color: rgba(0, 204, 51, 0.2); border: none;border-radius: 2px;padding: 3px;text-align: center;margin-bottom: 6px; "> {{log.agent_app_activity}}</span>
+				
+			</div>
+
+			<div class="row" *ngIf="log.agent_app_activity==='PHONE ON'||log.agent_app_activity==='GPS ON'">
+				<span class="fs10 tac" style="font-weight: 700;font-style: normal;font-size: 10px;color: #00CC33;background-color: rgba(0, 204, 51, 0.2); border: none;border-radius: 2px;padding: 3px;text-align: center;margin-bottom: 6px; "> {{log.agent_app_activity}}</span>
+				
+			</div>
+
+			<div class="row" *ngIf="log.agent_app_activity==='SHIFT OFF'||log.agent_app_activity==='PHONE OFF'||log.agent_app_activity==='GPS OFF'">
+				<span class="fs10 tac" style="font-weight: 700;font-style: normal;font-size: 10px;    color: #FF5B5B;background-color: rgba(255, 113, 113, 0.2); border: none;border-radius: 2px;padding: 3px;text-align: center;margin-bottom: 6px;"> {{log.agent_app_activity}}</span>
+				
+			</div>
+			<div class="row" *ngIf="log.agent_app_activity==='task'">
+				<span class="fs10 tac" style="font-weight: 700;font-style: normal;font-size: 10px;    color: #FF5B5B;background-color: rgba(255, 113, 113, 0.2); border: none;border-radius: 2px;padding: 3px;text-align: center;margin-bottom: 6px;"> {{log.agent_app_activity}}</span>
+				
+			</div>
+			<div class="row" *ngIf="log.activity_type==='location'">
+				<!--<span class="fs10 tac" style="font-weight: 700;font-style: normal;font-size: 10px;    color: #FF5B5B;background-color: rgba(255, 113, 113, 0.2); border: none;border-radius: 2px;padding: 3px;text-align: center;margin-bottom: 6px;"> {{log.agent_app_activity}}</span>-->
+				<small class="c_999 fs10">{{log.timestamp|date: 'hh:mm a'}}</small>
+			</div>
+			<div class="row">
+				<div *ngFor="let subMenuName of log['task_details']">
+					<div class="row" style="background-color: #F2F2F2;border-left:3px solid #00CC33;margin-top: 10px;border-radius: 3px;padding:3px;" id={{subMenuName.task_id}} (click)="travelLogTask(subMenuName.task_id)">
+						<div class="fs10">{{subMenuName.task}}</div> 
+						<div class="fs10">{{subMenuName.customer_name}}</div> 
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div *ngIf="travalLogDisp.length===0" class="tac">
+		<img src="./../assets/agentEmptyList.png" style="width:100px;height:100px;"/>
+	</div>
+</section>
+
+<!--<section id="mapComponentview" style="margin-top: 15px;padding: 5px 20px;">--><!--*ngIf="mapDisplay"-->
+<!--<div id="mapComponent">-->
+    <!--<div class="toggleButtons">
+        <ul>
+            <li (click)="toggleMapStyle()" [class.selected]="toggleDarkView">Dark Map</li>
+            <li (click)="toggleTrafficView()" [class.selected]="toggleTraffic">Traffic</li>-->
+            <!--<li (click)="toggleAgentsView()" [class.selected]="toggleAgents">Agent</li>-->
+            <!--<li>Unassigned</li>-->
+        <!--</ul>
+    </div>-->
+    <!--<div id="map" style="height:400px;width:100%;">  
+
+    </div>
+</div>
+</section>-->
+
+<section id="travelLogtask" style="display:none;">
+	<div class="row" style="margin: 3px 10px; background-color: rgb(215, 215, 215);margin-top: 10px;border-radius: 3px;padding:3px;    padding-bottom: 8px;border-left:4px solid rgb(0, 204, 51);border-color: rgb(0, 204, 51);">
+		<i class="fa fa-times pull-right" aria-hidden="true" (click)="closeTravellogTask()"></i>
+		<div>
+			{{travelTaskTitle}}
+		</div>
+		<div class="fs12 c_999">
+			{{travelTaskcustName}}
+		</div>
+	</div>
+	<div *ngFor="let attempt of travelTaskAttempts;let i = index;">
+		<div class="row main" id={{attempt.attempt_id}} style="margin-left:10px; margin-right:10px;margin-top: 5px;margin-bottom: 5px;background-color: rgba(228, 228, 228, 1);padding: 6px 0px;" (click)="toggleCustom(attempt.attempt_id)">
+			<div class="col-xs-3 fs10 tac p0"><!--(click)="onClick(attempt.attempt_id)-->
+				<div>
+					{{attempt.last_activity_timestamp|date: 'hh:mm a'}}
+				</div>
+				<div class="c_999">
+					{{attempt.last_activity_timestamp|date: 'dd-mm-yyyy'}}
+				</div>
+			</div>
+			<div class="col-xs-3 p0 tac">
+				<span style="border: 1px solid rgb(0, 204, 51);" class="fs10 c_00E" *ngIf="attempt.last_activity_status==='SUCCESS'">{{attempt.last_activity_status}}</span>
+				<span style="border: 1px solid #FF9900;" class="fs10 c_ff9" *ngIf="attempt.last_activity_status==='REVISIT'">{{attempt.last_activity_status}}</span>
+				<span style="border: 1px solid #FF4044;" class="fs10 c_FF4" *ngIf="attempt.last_activity_status==='FAILED'">{{attempt.last_activity_status}}</span>
+			</div>
+			<div class="col-xs-4 fs10">
+				<i class="docs fa fa-pencil active_docs"></i>
+				<i class="docs fa fa-file-image-o active_docs"></i>
+				<i class="docs fa fa-file-text"></i>
+			</div>
+			<div class="col-xs-2 p0">
+				<i class="fa fa-angle-right custom" ></i>
+			</div>
+		</div>
+		<div class="toggle" style="display: none;">
+		<div class="row" *ngFor="let list of attempt['activity_list']; let j=index;" style="background-color: rgb(242, 242, 242);margin-left: 10px;margin-right: 10px;" >
+			<div class="row" *ngIf="j===0">
+				<div class="row"> 
+					<div class="col-xs-3"></div>
+					<div class="col-xs-3 fs10 tac"><i class="fa fa-user fs10" aria-hidden="true"></i></div>
+					<div class="col-xs-6 fs9 tac">Added By : {{list.agent_name}}</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-3 fs10 p0 tac">
+						<div class="fs10">
+							{{list.location_timestamp|date: 'hh:mm a'}}
+						</div>
+						<div class="c_999 fs10">
+							{{list.location_timestamp|date: 'dd-mm-yyyy'}}
+						</div>
+					</div>
+					<div class="col-xs-3 tac">
+						<i class="fa fa-suitcase" aria-hidden="true" style="color:#fff;font-size:20px;"></i>
+					</div>
+					<div class="col-xs-6 fs9">
+						{{travelTaskcustName}}
+					</div>
+				</div>
+				<div class="row"> 
+					<div class="col-xs-3"></div>
+					<div class="col-xs-3 fs10 tac">
+					</div>
+					<div class="col-xs-6 fs10 tac p0">
+						<span style="color: white;background-color: #666666;padding: 5px;border-radius: 3px;margin-bottom: 3px;margin-top:3px;">By : {{attempt.last_activity_timestamp|date : 'hh:mm a'}} ,{{attempt.last_activity_timestamp|date : 'dd-mm-yyyy'}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="height:50px;">
+				<div class="col-xs-3 p0 tac">
+					<div class="fs10">
+						{{list.location_timestamp|date: 'hh:mm a'}}
+					</div>
+					<div class="c_999 fs10">
+						{{list.location_timestamp|date: 'dd-mm-yyyy'}}
+					</div>
+				</div>
+				<div class="col-xs-3 fs10 tac">
+					<div *ngIf="list.type==='ASSIGN AGENT'">
+						<img src={{list.agent_avatar}} style="border:3px solid #ddd;height:25px;width:25px;border-radius: 100%;"/>
+					</div>	
+					<div *ngIf="list.type==='ACKNOWLEDGED'">
+						<i class="fa fa-check-circle" aria-hidden="true" style="color:#5200FF;font-size:20px;"></i>
+					</div>
+					<div *ngIf="list.type==='AGENT ARRIVED'">
+						<i class="fa fa-map-marker" aria-hidden="true" style="font-size:20px;"></i>
+					</div>
+					<div *ngIf="list.type==='SUCCESS'">
+						<i class="fa fa-check-circle c_00E" aria-hidden="true" style="font-size:20px;"></i>
+					</div>
+					<div *ngIf="list.type==='REVISIT'">
+						<i class="fa fa-reply" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="col-xs-5 p0">
+					<div class="fs12" *ngIf="list.type==='ASSIGN AGENT'">
+						{{list.agent_name}}
+					</div>	
+					<div class="fs12" *ngIf="list.type==='ACKNOWLEDGED'">
+						Agent Acknowledged Task	 
+					</div>
+					<div class="fs12" *ngIf="list.type==='AGENT ARRIVED'">
+						Agent arrived at location
+					</div>
+					<div class="fs12" *ngIf="list.type==='SUCCESS'">
+						Successfull
+					</div>
+					<div class="fs12" *ngIf="list.type==='REVISIT'">
+						Marked Revisit
+						<p>{{attempt.revisit_remarks}}</p>
+					</div>
+					<div *ngIf="list.type==='SUCCESS'">
+						<div class="row">
+							<div class="col-xs-4" *ngFor="let docs of list.collections.document">
+								<img src={{docs}} height="40" width="30" data-toggle="modal" data-target="#documents" (click)='getImgUr(docs)'/>
+							</div>
+							<div class="col-xs-4" *ngFor="let docs of list.collections.signature">
+								<img src={{docs}} height="40" width="30" data-toggle="modal" data-target="#documents" (click)='getImgUr(docs)'/>
+							</div>
+						</div>	
+				    </div>
+				</div>
+				<div class="col-xs-1 p0">
+					<span href="">
+						<i class="fa fa-map-marker dropbtn" aria-hidden="true" style="font-size:12px;" (click)="getAddress(list.agent_location[0],list.agent_location[1],$event)"></i>
+						<div id="myDropdown" class="dropdown-content" style="    position: absolute;display: none;background: #000;color:#fff;left: -112px;bottom: -17px;width: 105px;padding: 1px;">
+						  </div>
+					</span>
+				</div>
+			</div>
+			<div class="row" *ngIf="list.type==='SUCCESS'" style="height: 50px;margin-top: 3px;">
+				<div class="col-xs-3"></div>	
+				<div class="col-xs-3 tac top_line">
+					<span style="border-radius: 100%;padding: 4px;border: 1px solid #ddd;"><i class="fa fa-plus fs18" aria-hidden="true"></i></span>
+				</div>	
+				<div class="col-xs-6 p0 tac fs10" style="margin-top:10px;">
+					<span style="border:1px dashed rgb(152, 152, 152);color: rgb(153, 153, 153);background-color: #fff;padding:5px 10px;" data-toggle="modal" data-target="#revisit" (click)="getIdFromRevisit(attempt.id)">Click to revisit this task</span>
+				</div>	
+			</div>
+		</div>
+		</div>
+	</div>	
+</section>
+
+<div id="revisit" class="modal fade" role="dialog">
+  	<div class="modal-dialog">
+    	<!-- Modal content-->
+    	<div class="modal-content">
+      		<div class="modal-header" style="background-color:  rgba(204, 204, 204, 1);padding:6px;">
+        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+       			<h4 class="modal-title">Revisit this task</h4>
+      		</div>
+		    <div class="modal-body">
+		    	 <div class="row">
+		            <div class="row fs12 c_0066FF"> Date & time</div>                
+		            <input class="col-xs-4 color_4F4F4F fs14 p0 form-control modalForm"  date-only="true" style="text-align: center;background-color:  rgba(204, 204, 204, 1);"  name="daterangeInput" daterangepicker id="revisitDate" [options]="optionsTask" (selected)="selectedTaskDate($event)">
+		        </div>
+		    	<div class="row">Add a comment</div>
+		    	<div class="row">
+		    		<textarea  class="form-control" placeholder="comment on revisit reason"[(ngModel)]=revisitComment> </textarea>
+		    	</div>	
+		    	 
+		    	<div class="row">
+		    		<div class="col-xs-6"><button data-dismiss="modal" > Cancel</button></div>
+		    		<div class="col-xs-6"><button data-dismiss="modal" (click)='revisitConfirm()'>Confirm</button></div>
+		    	</div>
+		    </div>
+    	</div>
+  	</div>
+</div>
+
+
+<div id="documents" class="modal fade" role="dialog">
+  	<div class="modal-dialog" style="background-color: #000;">
+    	<!-- Modal content-->
+    	<div class="modal-content" >
+		    <div class="modal-body" style="padding:0px; padding-bottom:5px;">
+		    	<button type="button" class="close" data-dismiss="modal" style="position: absolute;
+    				background-color: #000;color:#fff;z-index: 999;right: 0px;">&times;</button>
+		    	<div class="row tac">
+		    	<img src="{{documentImage}}" style="width: 277px;height:400px;    margin: auto;
+    				display: block;left: 0px;right: 0px;top: 0px;bottom: 0px;">
+		    	</div>
+		    </div>
+    	</div>
+  	</div>
+</div>
+
+<img *ngIf="loading" class="movingLoader" src="../assets/pink_loader.gif" />
+<img *ngIf="loading" class="lokraImgLoader" src="../assets/loktra_login.png" />

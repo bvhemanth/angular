@@ -1,0 +1,255 @@
+<header class="header">
+  	<div id="mySidenav" class="sidenav" ng-swipe-right="openNav()">
+	    <div class="row" class="headerRow">
+	      	<a class="row" href="javascript:void(0)" class="closebtn" (click)="closeNav()">
+	        	<i class="fa fa-times fs20" aria-hidden="true"></i>
+	      	</a>
+	      	<div class="pull-left fsletterDiv">
+	        	<div class="fsletter">{{firstLetter}}{{secondLetter}}</div>
+	      	</div>
+	      	<div class="row w70 pull-right">
+		        <p class="mb0 authName">
+		          	<b>{{agentName}}</b>
+		        </p>
+		        <p class="mb0 orgName">
+		          	<b>{{orgName}}</b>
+		        </p>
+	        	<!--<div class="mb0" ng-repeat="role in roles">-->
+	        	<div class="mb0">
+	            	{{roles.join(' | ')}}       
+	        	</div>
+	        	<!--<button class="vp_b"> View profile</button>-->
+	      	</div>  
+	    </div>      
+	    <!--<app-sidenavbar></app-sidenavbar>-->
+	    <a routerLink="/dashboard" [routerLinkActive]="['active']" (click)="closeNav('dashboard')" >
+		    <i  class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;&nbsp;Dashboard
+		</a>
+		<a routerLink="/members" [routerLinkActive]="['active']" (click)="closeNav('members')">
+		    <i class="fa fa-users" aria-hidden="true"></i>
+		    &nbsp;&nbsp;Members
+		</a>
+		<a routerLink="/lazy/memberdetails" [routerLinkActive]="['active']" (click)="closeNav('lazy/memberdetails')">
+		    <i class="fa fa-map" aria-hidden="true"></i>&nbsp;&nbsp;Tracking
+		</a>
+
+		<a routerLink="/lazy/leaves" [routerLinkActive]="['active']" (click)="closeNav('lazy/leaves')">
+		    <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Leaves
+		</a>
+		<a routerLink="/lazy/attendance" [routerLinkActive]="['active']" (click)="closeNav('lazy/attendance')">
+		        <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Attendance
+		</a>
+		<a class="logoutLink" (click)="logOut()">
+		    <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;Logout
+		</a>
+
+		    <!--<a><i class="fa fa-question-circle"></i>&nbsp;&nbsp;Help</a>-->
+		<footer class="navFooter">
+		    <div class="row footerRow">
+		        <div class="col-xs-2 p0">
+		            <img src="../assets/favicon.png" class="footerIcon">
+		        </div>
+		        <div class="col-xs-8 p0 tac">  
+		            <small> 
+		                <span style=""> powered by </span>
+		                <b class="companyFooter">Loktra</b>
+		            </small>
+		        </div>  
+		        <div class="col-xs-2 p0"></div>
+		    </div>
+		</footer>
+	</div>
+  	<div class="row top_title Head">
+    	<div class="col-xs-2" (click)="openNav()">
+      		<span> 
+        		<i class="fa fa-bars fs20" aria-hidden="true"></i>
+      		</span> 
+    	</div>
+    	<div class="col-xs-10 font_family"> 
+      		Attendance
+    	</div>
+  	</div>
+</header>
+
+<section class="dateSection">
+    <div class="row fs14 dateTreeDiv">
+        <div class="col-xs-4 color_4F4F4F fs14 tal p0" (click)="previous()"> 
+        	<i class="fa fa-chevron-left" aria-hidden="true"></i>
+        	&nbsp;&nbsp; Previous
+        </div>
+        <div class="col-xs-4 color_4F4F4F fs14 p0 tac" name="daterangeInput" daterangepicker [options]="options" id="mainDate" (selected)="selectedDate($event)">
+        	{{DaytoDisplay}}
+        	<i class="fa fa-caret-down" style=""  aria-hidden="true"></i>
+        </div>
+        <div class="col-xs-4 color_4F4F4F p0 tar" (click)="next()">
+        	Next&nbsp;&nbsp;
+        	<i class="fa fa-chevron-right fs14" style="padding:3px;" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="row fs14 dateTreeDiv">
+        <div class="col-xs-6 rCMf pull-left" routerLink="/departments">Function :
+          	<span class="fwb c_0066FF">{{functionName}} </span>
+        </div>
+        <div class="col-xs-6 rCMf pull-right" routerLink="/regions">Region :
+          	<span class="fwb c_0066FF">{{regionName}} </span> 
+        </div>
+    </div>
+</section>
+
+<section class="bgash pt20 m320">
+	<div class="row eachCard" *ngFor="let mark of attendanceData">
+		<div class="row">
+			<div class="col-xs-2 p0">
+				<img *ngIf="mark.requestor.avatar===null" src='../assets/noProfilePic.png'  style="border-radius: 100%; height: 36px; width: 36px; background-color: #666666;"/>
+				<img *ngIf="mark.requestor.avatar!=null" src={{mark.requestor.avatar}}  style="border-radius: 100%; height: 36px; width: 36px; background-color: #666666;"/>
+				<i class="fa fa-circle" *ngIf="mark.requestor.status==='ONLINE'" style="color:#00E53D;position: absolute;left: 26px;top: 27px;border: 2px solid #fff;border-radius: 100%;font-size: 8px;" aria-hidden="true"></i>
+				<i class="fa fa-circle" *ngIf="mark.requestor.status==='OFFLINE'" style="color:#FF4D4D;position: absolute;left: 26px;top: 27px;border: 2px solid #fff;border-radius: 100%;font-size: 8px;" aria-hidden="true"></i>
+				<i class="fa fa-circle" *ngIf="mark.requestor.status==='INACTIVE'" style="color:#666666 ;position: absolute;left: 26px;top: 27px;border: 2px solid #fff;border-radius: 100%;font-size: 8px;" aria-hidden="true"></i>
+			</div>
+			<div class="col-xs-7 fs12 p0 fwb fontstyle">{{mark.requestor.name}}<br/>
+				<span class="fs10 c_978F7F">{{mark.requestor.roles.join(' | ')}}</span>
+			</div>
+			<div class="col-xs-3 fs10 p0 c_978F7F tac">Work hrs <br/>{{mark.total_working_hours}}
+			</div>
+		</div>
+		<div class="row mt10">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-4 p0">
+				<div *ngFor="let status of attendanceStatusIds"> 
+					<div class="dropdown" *ngIf="mark.attendance_type_id===status.type_id">
+						<button class="dropbtn fs10" (click)="changeLeaveStatus(mark.attendance_type_id,mark.attendance_type_id)">{{status.type_id_value}}</button>
+						<div class="dropdown-content">
+						    <a class="fs10" *ngFor="let category of attendanceStatusIds" (click)="changeAttendanceStatus(category.type_id,mark.requestor.member_id)">
+						    	<div style="padding: 5px 7px 5px 7px;" *ngIf="category.type_id_value!='Action Pending'">{{category.type_id_value}}</div>
+						    </a>
+						</div>
+					</div>
+				</div>
+				<div class="row fs10"  *ngIf="mark.manager_remarks!=''">{{mark.manager_remarks}}</div>
+			</div>
+			<div class="col-xs-4">
+				<button  class="chatButton" (click)="getRemarksForAttendance(mark.manager_remarks,mark.requestor.member_id,mark.attendance_type_id)">
+					<i class="fa fa-comment-o" aria-hidden="true" *ngIf="mark.manager_remarks===''||mark.manager_remarks===null">
+					</i>
+					<i class="fa fa-pencil-square-o" aria-hidden="true" *ngIf="mark.manager_remarks!=null&&mark.manager_remarks!=''">
+					</i>
+				</button>
+			</div>
+			<div class="col-xs-1 p0">
+				<button class="chatButton" (click)="toggleMoreInfo($event)">
+					<i class="fa fa-chevron-down" aria-hidden="true" (click)="toggleMoreInfoArrow($event)"></i>
+				</button>
+			</div>
+		</div>
+		<div style="display:none;" class="bt mt10 row">
+			<table style="width: 100%;" class="mt10 col-xs-12">
+				<thead>
+					<tr>
+						<th class="fs10 fwb tac">SHIFT ON</th>
+						<th class="fs10 fwb tac">SHIFT OFF</th>
+						<th class="fs10 fwb tac">REPORTING TO</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="fs10 c_978F7F tac">{{mark.shift_on_time|date: 'hh:mm a'}}</td>
+						<td class="fs10 c_978F7F tac">{{mark.shift_off_time|date: 'hh:mm a'}}</td>
+						<td class="fs10 tac">{{mark.reporting_to}}</td>
+					</tr>
+					<tr>
+						<td class="fs10 tac">
+							<div class="underline c_978F7F">
+								<a *ngIf="mark.shiftOnArea!=''" target="_blank" href="http://www.google.com/maps/place/{{mark.shiftOnArea}}">{{mark.shiftOnArea}}</a>
+								{{mark.shift_on_tag}}
+							</div>
+							<!--<div class="underline c_978F7F" *ngIf="mark.shift_on_latitude===''&&mark.shift_on_tag===''"></div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_on_latitude===''&&mark.shift_on_tag===null">	 
+								<a target="_blank" href="http://www.google.com/maps/place/{{mark.shiftOnArea}}">
+								{{mark.shift_on_tag}}
+								</a>
+							</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_on_latitude!=''&&mark.shift_on_tag===null">
+								<a target="_blank" href="http://www.google.com/maps/place/{{mark.shiftOnArea}}">{{mark.shiftOnArea}}</a>
+							</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_on_latitude!=''&&mark.shift_on_tag!=''">	
+								<a target="_blank" href="http://maps.google.com/maps?q=loc:{{mark.shift_on_latitude}},{{mark.shift_on_longitude}}">
+								{{mark.shift_on_tag}}
+								</a>
+							</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_on_latitude!=''&&mark.shift_on_tag===''">	
+								<a target="_blank" href="http://www.google.com/maps/place/{{mark.shiftOnArea}}">
+									{{mark.shiftOnArea}}
+								</a>
+							</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_on_latitude===''&&mark.shift_on_tag!=''">{{mark.shift_on_tag}}</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_on_latitude===null&&mark.shift_on_tag!=''">{{mark.shift_on_tag}}</div>-->
+						</td>
+
+						<td class="fs10 tac">
+							<div class="underline c_978F7F">
+								<a *ngIf="mark.shiftOffArea!=''" target="_blank" href="http://www.google.com/maps/place/{{mark.shiftOffArea}}">{{mark.shiftOffArea}}</a>
+								{{mark.shift_off_tag}}
+							</div>
+
+							<!--<div class="underline c_978F7F" *ngIf="mark.shift_off_latitude===''&&mark.shift_off_tag===''"></div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_off_latitude===''&&mark.shift_off_tag===null">	 
+								<a target="_blank" href="http://www.google.com/maps/place/{{mark.shiftOffArea}}">
+								{{mark.shift_off_tag}}
+								</a>
+							</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_off_latitude!=''&&mark.shift_off_tag===null">
+								<a target="_blank" href="http://www.google.com/maps/place/{{mark.shiftOffArea}}">{{mark.shiftOffArea}}</a>
+							</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_off_latitude!=''&&mark.shift_off_tag!=''">	
+								<a target="_blank" href="http://maps.google.com/maps?q=loc:{{mark.shift_on_latitude}},{{mark.shift_on_longitude}}">
+								{{mark.shift_off_tag}}
+								</a>
+							</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_off_latitude!=''&&mark.shift_off_tag===''">	
+								<a target="_blank" href="http://www.google.com/maps/place/{{mark.shiftOffArea}}">
+									{{mark.shiftOffArea}}
+								</a>
+							</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_off_latitude===''&&mark.shift_off_tag!=''">{{mark.shift_off_tag}}</div>
+							<div class="underline c_978F7F" *ngIf="mark.shift_off_latitude===null&&mark.shift_off_tag!=''">{{mark.shift_off_tag}}</div>-->
+							
+						</td>
+						<td class="fs10"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>	
+	<div *ngIf="noData===true">
+		no data available
+	</div>
+</section>
+
+
+<div class="modal fade in" bsModal id="successErrorModal" #successErrorModal tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="false">
+  	<div class="modal-dialog">
+    	<div class="modal-content">
+		    <div class="modal-body">
+		    	<div class="row c_978F7F fs12 fwb fontstyle">
+		    		<span class="red fs10" *ngIf="error">{{error}}</span>
+		    	</div> 
+		    	<div class="row tac mt10">
+		    		<textarea class="from-control fs10" rows="4" placeholder="Add a note (optional)" [(ngModel)]="mangerRemrksForAttendance"></textarea>
+		    	</div>
+
+		    	<div class="row ">
+		    		<div class="col-xs-6">
+		    			
+		    		</div>
+		    		<div class="col-xs-6 p0">
+		    			<button class="fs12" (click)="closeModal()">CANCEL</button>
+		    			<button class="fs12 fwb fontstyle blue" (click)="commentsToApi()">DONE</button>
+		    		</div>
+		    	</div>
+		    </div>
+    	</div>
+  	</div>
+</div>
+
+<img *ngIf="loading" class="movingLoader" src="../assets/pink_loader.gif" />
+<img *ngIf="loading" class="lokraImgLoader" src="../assets/favicon.png" />

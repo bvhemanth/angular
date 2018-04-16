@@ -1,0 +1,25 @@
+<section>
+	<div class="row" style="font-size:30px;cursor:pointer;padding: 0px 10px;" class="top_title departmentsHead">
+		<div class="col-xs-2">
+			<img id="back" src="./../assets/login-arrow-back.png" (click)="backRegions()"/>
+		</div>
+		<div class="col-xs-6">
+			Departments
+		</div>
+		<div class="col-xs-4">		
+		</div>
+	</div>
+</section>
+
+<section>
+	<div class="row" style="margin:20px;">
+		<div *ngFor="let node of tree_data">
+			<div class="row fs12 bbE4E4E4 lh34" (click)="getNodeid(node.id,node.name,$event)">
+				{{node.name}}
+			</div>
+		</div>
+	</div>
+</section>
+
+<img *ngIf="loading" class="movingLoader" src="../assets/pink_loader.gif" />
+<img *ngIf="loading" class="lokraImgLoader" src="../assets/favicon.png" />
